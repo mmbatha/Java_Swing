@@ -72,7 +72,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>fr._42.swingy.Main</mainClass>
+                            <mainClass>za.co.technoris.swingy.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -94,5 +94,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

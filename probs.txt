@@ -71,8 +71,8 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  3.713 s
-[INFO] Finished at: 2019-07-02T17:02:34+02:00
+[INFO] Total time:  2.233 s
+[INFO] Finished at: 2019-07-02T17:06:04+02:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.5:compile (default-compile) on project swingy: Compilation failure: Compilation failure: 
 [ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/42_swingy/src/main/java/za/co/technoris/swingy/Models/Characters/Hero.java:[139,31] cannot find symbol
