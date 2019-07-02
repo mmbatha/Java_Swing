@@ -1,0 +1,121 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< za.co.technoris:swingy >-----------------------
+[INFO] Building swingy 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ swingy ---
+[INFO] Deleting /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ swingy ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.5:compile (default-compile) @ swingy ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 27 source files to /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/target/classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Models/characters/Hero.java:[139,31] cannot find symbol
+  symbol:   method getHp()
+  location: variable helm of type za.co.technoris.swingy.Models.artifacts.Helm
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Models/characters/Hero.java:[142,27] cannot find symbol
+  symbol:   method getHp()
+  location: variable helm of type za.co.technoris.swingy.Models.artifacts.Helm
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[64,47] cannot find symbol
+  symbol:   method getHp()
+  location: class za.co.technoris.swingy.Models.artifacts.Helm
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[64,72] cannot find symbol
+  symbol:   method getHp()
+  location: class za.co.technoris.swingy.Models.artifacts.Helm
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[122,17] cannot find symbol
+  symbol:   variable CliView
+  location: class za.co.technoris.swingy.Controllers.GameManager
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[102,16] incompatible types: za.co.technoris.swingy.Models.artifacts.Artifacts cannot be converted to int
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[103,18] cannot find symbol
+  symbol:   variable WEAPON
+  location: class za.co.technoris.swingy.Database.DatabaseHandler
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[106,18] cannot find symbol
+  symbol:   variable ARMOR
+  location: class za.co.technoris.swingy.Database.DatabaseHandler
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[109,18] cannot find symbol
+  symbol:   variable HELM
+  location: class za.co.technoris.swingy.Database.DatabaseHandler
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[152,85] cannot find symbol
+  symbol:   variable WEAPON
+  location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[153,85] cannot find symbol
+  symbol:   variable ARMOR
+  location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[154,86] cannot find symbol
+  symbol:   variable HELM
+  location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[271,89] cannot find symbol
+  symbol:   variable WEAPON
+  location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[272,89] cannot find symbol
+  symbol:   variable ARMOR
+  location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[273,89] cannot find symbol
+  symbol:   variable HELM
+  location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[INFO] 15 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.213 s
+[INFO] Finished at: 2019-07-02T15:57:08+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.5:compile (default-compile) on project swingy: Compilation failure: Compilation failure: 
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Models/characters/Hero.java:[139,31] cannot find symbol
+[ERROR]   symbol:   method getHp()
+[ERROR]   location: variable helm of type za.co.technoris.swingy.Models.artifacts.Helm
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Models/characters/Hero.java:[142,27] cannot find symbol
+[ERROR]   symbol:   method getHp()
+[ERROR]   location: variable helm of type za.co.technoris.swingy.Models.artifacts.Helm
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[64,47] cannot find symbol
+[ERROR]   symbol:   method getHp()
+[ERROR]   location: class za.co.technoris.swingy.Models.artifacts.Helm
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[64,72] cannot find symbol
+[ERROR]   symbol:   method getHp()
+[ERROR]   location: class za.co.technoris.swingy.Models.artifacts.Helm
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[122,17] cannot find symbol
+[ERROR]   symbol:   variable CliView
+[ERROR]   location: class za.co.technoris.swingy.Controllers.GameManager
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[102,16] incompatible types: za.co.technoris.swingy.Models.artifacts.Artifacts cannot be converted to int
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[103,18] cannot find symbol
+[ERROR]   symbol:   variable WEAPON
+[ERROR]   location: class za.co.technoris.swingy.Database.DatabaseHandler
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[106,18] cannot find symbol
+[ERROR]   symbol:   variable ARMOR
+[ERROR]   location: class za.co.technoris.swingy.Database.DatabaseHandler
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[109,18] cannot find symbol
+[ERROR]   symbol:   variable HELM
+[ERROR]   location: class za.co.technoris.swingy.Database.DatabaseHandler
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[152,85] cannot find symbol
+[ERROR]   symbol:   variable WEAPON
+[ERROR]   location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[153,85] cannot find symbol
+[ERROR]   symbol:   variable ARMOR
+[ERROR]   location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[154,86] cannot find symbol
+[ERROR]   symbol:   variable HELM
+[ERROR]   location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[271,89] cannot find symbol
+[ERROR]   symbol:   variable WEAPON
+[ERROR]   location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[272,89] cannot find symbol
+[ERROR]   symbol:   variable ARMOR
+[ERROR]   location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/proj2/swingy/src/main/java/za/co/technoris/swingy/Database/DatabaseHandler.java:[273,89] cannot find symbol
+[ERROR]   symbol:   variable HELM
+[ERROR]   location: class za.co.technoris.swingy.Models.artifacts.Artifacts
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
