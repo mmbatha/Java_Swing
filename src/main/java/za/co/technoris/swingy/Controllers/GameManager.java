@@ -119,7 +119,7 @@ public class GameManager {
         if (hero.getHp() <= 0) {
             LoggerHelper.print("Game Over!");
             if (!isGUI) {
-                CliView.run();
+                CLI.run();
             }
         } else if (foe.getHp() <= 0) {
             DatabaseHandler.getInstance().updateHero(hero);

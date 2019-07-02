@@ -1,7 +1,7 @@
 [INFO] Scanning for projects...
 [INFO] 
 [INFO] -----------------------< za.co.technoris:swingy >-----------------------
-[INFO] Building swingy 1.0-SNAPSHOT
+[INFO] Building swingy 2.5
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
 [INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ swingy ---
@@ -66,16 +66,13 @@
 [ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/42_swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[64,72] cannot find symbol
   symbol:   method getHp()
   location: class za.co.technoris.swingy.Models.Artifacts.Helm
-[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/42_swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[122,17] cannot find symbol
-  symbol:   variable CliView
-  location: class za.co.technoris.swingy.Controllers.GameManager
-[INFO] 18 errors 
+[INFO] 17 errors 
 [INFO] -------------------------------------------------------------
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  4.029 s
-[INFO] Finished at: 2019-07-02T16:55:22+02:00
+[INFO] Total time:  3.713 s
+[INFO] Finished at: 2019-07-02T17:02:34+02:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.5:compile (default-compile) on project swingy: Compilation failure: Compilation failure: 
 [ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/42_swingy/src/main/java/za/co/technoris/swingy/Models/Characters/Hero.java:[139,31] cannot find symbol
@@ -127,9 +124,6 @@
 [ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/42_swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[64,72] cannot find symbol
 [ERROR]   symbol:   method getHp()
 [ERROR]   location: class za.co.technoris.swingy.Models.Artifacts.Helm
-[ERROR] /goinfre/mmbatha/Desktop/mmbatha/Java/42_swingy/src/main/java/za/co/technoris/swingy/Controllers/GameManager.java:[122,17] cannot find symbol
-[ERROR]   symbol:   variable CliView
-[ERROR]   location: class za.co.technoris.swingy.Controllers.GameManager
 [ERROR] -> [Help 1]
 [ERROR] 
 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
