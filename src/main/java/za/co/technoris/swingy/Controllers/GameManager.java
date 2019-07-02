@@ -2,11 +2,11 @@ package za.co.technoris.swingy.Controllers;
 
 import za.co.technoris.swingy.Helpers.*;
 import za.co.technoris.swingy.Database.DatabaseHandler;
-import za.co.technoris.swingy.Models.artifacts.Armor;
-import za.co.technoris.swingy.Models.artifacts.Helm;
-import za.co.technoris.swingy.Models.artifacts.Weapon;
-import za.co.technoris.swingy.Models.characters.Foe;
-import za.co.technoris.swingy.Views.cli.CLI;
+import za.co.technoris.swingy.Models.Artifacts.Armor;
+import za.co.technoris.swingy.Models.Artifacts.Helm;
+import za.co.technoris.swingy.Models.Artifacts.Weapon;
+import za.co.technoris.swingy.Models.Characters.Foe;
+import za.co.technoris.swingy.Views.CommandLine.CLI;
 
 import java.util.Random;
 import java.util.Scanner;

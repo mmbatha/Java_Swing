@@ -8,9 +8,9 @@ import za.co.technoris.swingy.Controllers.CharacterFactory;
 import za.co.technoris.swingy.Controllers.GameManager;
 import za.co.technoris.swingy.Controllers.MapFactory;
 import za.co.technoris.swingy.Database.DatabaseHandler;
-import za.co.technoris.swingy.Models.characters.Character;
-import za.co.technoris.swingy.Models.characters.Hero;
-import za.co.technoris.swingy.Views.cli.CLI;
+import za.co.technoris.swingy.Models.Characters.Character;
+import za.co.technoris.swingy.Models.Characters.Hero;
+import za.co.technoris.swingy.Views.CommandLine.CLI;
 
 import javax.swing.*;
 import java.awt.*;

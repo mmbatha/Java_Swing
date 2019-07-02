@@ -1,7 +1,7 @@
 package za.co.technoris.swingy.Controllers;
 
 import za.co.technoris.swingy.Helpers.LoggerHelper;
-import za.co.technoris.swingy.Models.characters.Character;
+import za.co.technoris.swingy.Models.Characters.Character;
 import za.co.technoris.swingy.Views.Map;
 
 /**

@@ -96,7 +96,7 @@ public class DatabaseHandler {
         return (dbConnection);
     }
 
-    private ByteArrayInputStream serializeObject(Hero hero, Artifacts a) throws IOException {
+    private ByteArrayInputStream serializeObject(Hero hero, Artifact a) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
         switch (a) {

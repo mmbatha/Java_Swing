@@ -1,8 +1,8 @@
 package za.co.technoris.swingy.Helpers;
 
-import za.co.technoris.swingy.Models.artifacts.Artifacts;
-import za.co.technoris.swingy.Models.characters.Foe;
-import za.co.technoris.swingy.Models.characters.Hero;
+import za.co.technoris.swingy.Models.Artifacts.Artifact;
+import za.co.technoris.swingy.Models.Characters.Foe;
+import za.co.technoris.swingy.Models.Characters.Hero;
 import za.co.technoris.swingy.Views.Map;
 
 import javax.swing.*;
@@ -34,6 +34,6 @@ public class GlobalHelper {
     public static int heroNumber = 0;
     public static Hero hero;
     public static Foe foe;
-    public static Artifacts artifact;
+    public static Artifact artifact;
     public static Map map;
 }

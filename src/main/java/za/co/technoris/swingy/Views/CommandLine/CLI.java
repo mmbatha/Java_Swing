@@ -7,8 +7,8 @@ import za.co.technoris.swingy.Controllers.CharacterFactory;
 import za.co.technoris.swingy.Controllers.MapFactory;
 import za.co.technoris.swingy.Controllers.GameManager;
 import za.co.technoris.swingy.Database.DatabaseHandler;
-import za.co.technoris.swingy.Models.characters.Hero;
-import za.co.technoris.swingy.Views.gui.GUI;
+import za.co.technoris.swingy.Models.Characters.Hero;
+import za.co.technoris.swingy.Views.GraphicUser.GUI;
 
 import java.util.List;
 import java.util.Scanner;

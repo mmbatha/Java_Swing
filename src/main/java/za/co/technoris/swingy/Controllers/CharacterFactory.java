@@ -2,8 +2,8 @@ package za.co.technoris.swingy.Controllers;
 
 import za.co.technoris.swingy.Helpers.CharacterTypes;
 import za.co.technoris.swingy.Helpers.LoggerHelper;
-import za.co.technoris.swingy.Models.characters.*;
-import za.co.technoris.swingy.Models.characters.Character;
+import za.co.technoris.swingy.Models.Characters.*;
+import za.co.technoris.swingy.Models.Characters.Character;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;

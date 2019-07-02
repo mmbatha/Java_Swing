@@ -1,7 +1,7 @@
 package za.co.technoris.swingy.Views;
 
-import za.co.technoris.swingy.Models.characters.Character;
-import za.co.technoris.swingy.Models.characters.Hero;
+import za.co.technoris.swingy.Models.Characters.Character;
+import za.co.technoris.swingy.Models.Characters.Hero;
 import lombok.Getter;
 import java.util.Random;
 
