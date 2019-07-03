@@ -70,7 +70,7 @@ class Window extends JFrame {
     private ButtonGroup btngrpLoot = new ButtonGroup();
     private JScrollPane jScrollPane;
 
-    private BufferedImage imgWolf;
+    private BufferedImage imgZombie;
     private BufferedImage imgVillain;
     private BufferedImage imgFarmer;
     private BufferedImage imgNerd;
@@ -124,7 +124,7 @@ class Window extends JFrame {
 
         ((FlowLayout)jpMap.getLayout()).setVgap(0);
         BufferedImage bgImage = ImageHelper.loadImage(ASSETS_DIR + "img.png");
-        imgWolf = ImageHelper.loadImage(ASSETS_DIR + "wolf.png");
+        imgZombie = ImageHelper.loadImage(ASSETS_DIR + "zombie.png");
         imgVillain = ImageHelper.loadImage(ASSETS_DIR + "villain.png");
         imgFarmer = ImageHelper.loadImage(ASSETS_DIR + "farmer.png");
         imgNerd = ImageHelper.loadImage(ASSETS_DIR + "nerd.png");
@@ -306,7 +306,7 @@ class Window extends JFrame {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                scaledImg = imgWolf.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
+                                scaledImg = imgZombie.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
                                 if (scaledImg != null) {
                                     JLabel picLabel = new JLabel(new ImageIcon(scaledImg));
                                     jpCell.add(picLabel);
