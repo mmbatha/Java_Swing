@@ -96,10 +96,10 @@ public class DatabaseHandler {
         return (dbConnection);
     }
 
-    private ByteArrayInputStream serializeObject(Hero hero, Artifact a) throws IOException {
+    private ByteArrayInputStream serializeObject(Hero hero, ArtifactsHelper artifact) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-        switch (a) {
+        switch (artifact) {
             case WEAPON:
                 objOutputStream.writeObject(hero.getWeapon());
                 break ;
@@ -149,9 +149,9 @@ public class DatabaseHandler {
                 preparedStatement.setInt(5, hero.getAttack());
                 preparedStatement.setInt(6, hero.getDefense());
                 preparedStatement.setInt(7, hero.getHp());
-                preparedStatement.setBinaryStream(8, serializeObject(hero, Artifacts.WEAPON), byteArray.length);
-                preparedStatement.setBinaryStream(9, serializeObject(hero, Artifacts.ARMOR), byteArray.length);
-                preparedStatement.setBinaryStream(10, serializeObject(hero, Artifacts.HELM), byteArray.length);
+                preparedStatement.setBinaryStream(8, serializeObject(hero, ArtifactsHelper.WEAPON), byteArray.length);
+                preparedStatement.setBinaryStream(9, serializeObject(hero, ArtifactsHelper.ARMOR), byteArray.length);
+                preparedStatement.setBinaryStream(10, serializeObject(hero, ArtifactsHelper.HELM), byteArray.length);
                 preparedStatement.executeUpdate();
                 LoggerHelper.print("Db: <" + hero.getName() + ">" + " created");
             }
@@ -225,9 +225,9 @@ public class DatabaseHandler {
                         .append("Attack: ").append(resultSet.getInt(TBL_KEY_ATTACK)).append("\n")
                         .append("Defense: ").append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n")
                         .append("Health: ").append(resultSet.getInt(TBL_KEY_HP)).append("\n")
-                        .append("Weapon: ").append(((Artifacts) deserializeObject(resultSet, TBL_KEY_WEAPON)).getName()).append("\n")
-                        .append("Armor: ").append(((Artifacts) deserializeObject(resultSet, TBL_KEY_ARMOR)).getName()).append("\n")
-                        .append("Helm: ").append(((Artifacts) deserializeObject(resultSet, TBL_KEY_HELM)).getName()).append("\n\n");
+                        .append("Weapon: ").append(((Artifact) deserializeObject(resultSet, TBL_KEY_WEAPON)).getName()).append("\n")
+                        .append("Armor: ").append(((Artifact) deserializeObject(resultSet, TBL_KEY_ARMOR)).getName()).append("\n")
+                        .append("Helm: ").append(((Artifact) deserializeObject(resultSet, TBL_KEY_HELM)).getName()).append("\n\n");
                 heroNumber += 1;
             }
             LoggerHelper.print(sb.toString());
@@ -268,9 +268,9 @@ public class DatabaseHandler {
             preparedStatement.setInt(3, hero.getAttack());
             preparedStatement.setInt(4, hero.getDefense());
             preparedStatement.setInt(5, hero.getHp());
-            preparedStatement.setBinaryStream(6, serializeObject(((Hero)hero), Artifacts.WEAPON), byteArray.length);
-            preparedStatement.setBinaryStream(7, serializeObject(((Hero)hero), Artifacts.ARMOR), byteArray.length);
-            preparedStatement.setBinaryStream(8, serializeObject(((Hero)hero), Artifacts.HELM), byteArray.length);
+            preparedStatement.setBinaryStream(6, serializeObject(((Hero)hero), ArtifactsHelper.WEAPON), byteArray.length);
+            preparedStatement.setBinaryStream(7, serializeObject(((Hero)hero), ArtifactsHelper.ARMOR), byteArray.length);
+            preparedStatement.setBinaryStream(8, serializeObject(((Hero)hero), ArtifactsHelper.HELM), byteArray.length);
             preparedStatement.setString(9, hero.getName());
             preparedStatement.executeUpdate();
         } catch (SQLException | IOException e) {
