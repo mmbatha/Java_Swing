@@ -25,11 +25,11 @@ public class Main {
                     GUI.run();
                     break;
                 default:
-                    LoggerHelper.print("Usage: java -jar target/swingy [console/gui]");
+                    LoggerHelper.print("Usage: java -jar target/swingy.jar [console/gui]");
                     break;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            LoggerHelper.print("Usage: java -jar target/swingy [console/gui]");
+            LoggerHelper.print("Usage: java -jar target/swingy.jar [console/gui]");
         }
     }
 }

@@ -20,14 +20,14 @@ public abstract class CharacterFactory {
 
     public static Character newHero(String heroName, CharacterTypes characterType) {
         switch (characterType) {
-            case WARRIOR:
-                character = new Warrior(heroName);
+            case VILLAIN:
+                character = new Villain(heroName);
                 break;
-            case THIEF:
-                character = new Thief(heroName);
+            case FARMER:
+                character = new Farmer(heroName);
                 break;
-            case WIZARD:
-                character = new Wizard(heroName);
+            case NERD:
+                character = new Nerd(heroName);
                 break;
         }
         Validator validator = factory.getValidator();
@@ -46,11 +46,11 @@ public abstract class CharacterFactory {
 
     static Character newFoe(CharacterTypes characterType, Character hero) {
         switch (characterType) {
-            case RAT:
-                character = new Rat(hero.getLevel());
+            case ZOMBIE:
+                character = new Zombie(hero.getLevel());
                 break;
-            case BAT:
-                character = new Bat(hero.getLevel());
+            case WOLF:
+                character = new Wolf(hero.getLevel());
                 break;
         }
         return (character);

@@ -57,7 +57,7 @@ class Window extends JFrame {
     private JPanel jpInput = new JPanel();
 
     private JButton jbtnCreate = new JButton("Create a new hero");
-    private JButton jbtnSelect = new JButton("Select a previously created hero");
+    private JButton jbtnSelect = new JButton("Select a hero");
     private JButton jbtnSwitch = new JButton("Switch to Console");
     private JButton jbtnValidateCreation = new JButton("Create");
     private JButton jbtnValidateEncounter = new JButton("OK");
@@ -70,16 +70,16 @@ class Window extends JFrame {
     private ButtonGroup btngrpLoot = new ButtonGroup();
     private JScrollPane jScrollPane;
 
-    private BufferedImage imgBat;
-    private BufferedImage imgWarrior;
-    private BufferedImage imgThief;
-    private BufferedImage imgWizard;
-    private BufferedImage imgFight;
+    private BufferedImage imgWolf;
+    private BufferedImage imgVillain;
+    private BufferedImage imgFarmer;
+    private BufferedImage imgNerd;
+    private BufferedImage imgWeapon;
     private Image scaledImg;
 
     private GridLayout gridLayout = new GridLayout();
 
-    private static final String ASSETS_DIR = "src/main/java/za/co/swingy/assets/";
+    private static final String ASSETS_DIR = "src/main/java/za/co/technoris/swingy/Assets/";
 
     Window() {
         setTitle("Swingy");
@@ -124,11 +124,11 @@ class Window extends JFrame {
 
         ((FlowLayout)jpMap.getLayout()).setVgap(0);
         BufferedImage bgImage = ImageHelper.loadImage(ASSETS_DIR + "img.png");
-        imgBat = ImageHelper.loadImage(ASSETS_DIR + "bat.png");
-        imgWarrior = ImageHelper.loadImage(ASSETS_DIR + "warrior.png");
-        imgThief = ImageHelper.loadImage(ASSETS_DIR + "thief.png");
-        imgWizard = ImageHelper.loadImage(ASSETS_DIR + "wizard.png");
-        imgFight = ImageHelper.loadImage(ASSETS_DIR + "fight.png");
+        imgWolf = ImageHelper.loadImage(ASSETS_DIR + "wolf.png");
+        imgVillain = ImageHelper.loadImage(ASSETS_DIR + "villain.png");
+        imgFarmer = ImageHelper.loadImage(ASSETS_DIR + "farmer.png");
+        imgNerd = ImageHelper.loadImage(ASSETS_DIR + "nerd.png");
+        imgWeapon = ImageHelper.loadImage(ASSETS_DIR + "weapon.png");
         scaledImg = bgImage.getScaledInstance(window.getWidth() / 2, window.getHeight(), Image.SCALE_DEFAULT);
         jlblPic = new JLabel(new ImageIcon(scaledImg));
 
@@ -141,18 +141,18 @@ class Window extends JFrame {
         jpGrid.setPreferredSize(new Dimension(window.getWidth() / 2, window.getHeight()));
         jpGrid.setBackground(Color.LIGHT_GRAY);
 
-        jcbCreate.addItem("Warrior");
-        jcbCreate.addItem("Thief");
-        jcbCreate.addItem("Wizard");
+        jcbCreate.addItem("Villain");
+        jcbCreate.addItem("Farmer");
+        jcbCreate.addItem("Nerd");
         jcbCreate.addActionListener(new ComboCreateAction());
         jcbCreate.setPreferredSize(new Dimension(200, 50));
         jcbSelect.setPreferredSize(new Dimension(200, 50));
 
-        jbtnCreate.setPreferredSize(new Dimension(300, 70));
+        jbtnCreate.setPreferredSize(new Dimension(200, 50));
         jbtnCreate.addActionListener(new ButtonCreateListener());
-        jbtnSelect.setPreferredSize(new Dimension(300, 70));
+        jbtnSelect.setPreferredSize(new Dimension(200, 50));
         jbtnSelect.addActionListener(new ButtonSelectListener());
-        jbtnSwitch.setPreferredSize(new Dimension(300, 70));
+        jbtnSwitch.setPreferredSize(new Dimension(200, 50));
         jbtnSwitch.addActionListener(new ButtonHeroSwitchListener());
         jbtnValidateCreation.setPreferredSize(new Dimension(200, 40));
         jbtnValidateCreation.addActionListener(new ButtonHeroCreateListener());
@@ -281,14 +281,14 @@ class Window extends JFrame {
                             @Override
                             public void run() {
                                 switch (hero.getType()) {
-                                    case "Warrior":
-                                        scaledImg = imgWarrior.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
+                                    case "Villain":
+                                        scaledImg = imgVillain.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
                                         break;
-                                    case "Thief":
-                                        scaledImg = imgThief.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
+                                    case "Farmer":
+                                        scaledImg = imgFarmer.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
                                         break;
-                                    case "Wizard":
-                                        scaledImg = imgWizard.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
+                                    case "Nerd":
+                                        scaledImg = imgNerd.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
                                         break;
                                 }
                                 if (scaledImg != null) {
@@ -306,7 +306,7 @@ class Window extends JFrame {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                scaledImg = imgBat.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
+                                scaledImg = imgWolf.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
                                 if (scaledImg != null) {
                                     JLabel picLabel = new JLabel(new ImageIcon(scaledImg));
                                     jpCell.add(picLabel);
@@ -322,7 +322,7 @@ class Window extends JFrame {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                scaledImg = imgFight.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
+                                scaledImg = imgWeapon.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
                                 if (scaledImg != null) {
                                     JLabel picLabel = new JLabel(new ImageIcon(scaledImg));
                                     jpCell.add(picLabel);
@@ -413,7 +413,7 @@ class Window extends JFrame {
                 jbtnSelect.setVisible(false);
                 jbtnSwitch.setVisible(false);
                 jcbSelect.removeAllItems();
-                List<Hero> heroes = DatabaseHandler.getInstance().getDB();
+                List<Hero> heroes = DatabaseHandler.getInstance().getFromDB();
                 for (Hero hero : heroes) {
                     jcbSelect.addItem(hero.getName());
                 }
@@ -429,13 +429,13 @@ class Window extends JFrame {
             Character selectedCharacter = null;
             switch (selectedIndex) {
                 case 0:
-                    selectedCharacter = CharacterFactory.newHero(jtfInput.getText().trim(), CharacterTypes.WARRIOR);
+                    selectedCharacter = CharacterFactory.newHero(jtfInput.getText().trim(), CharacterTypes.VILLAIN);
                     break;
                 case 1:
-                    selectedCharacter = CharacterFactory.newHero(jtfInput.getText().trim(), CharacterTypes.THIEF);
+                    selectedCharacter = CharacterFactory.newHero(jtfInput.getText().trim(), CharacterTypes.FARMER);
                     break;
                 case 2:
-                    selectedCharacter = CharacterFactory.newHero(jtfInput.getText().trim(), CharacterTypes.WIZARD);
+                    selectedCharacter = CharacterFactory.newHero(jtfInput.getText().trim(), CharacterTypes.NERD);
                     break;
             }
             if (selectedCharacter != null) {
@@ -559,7 +559,7 @@ class Window extends JFrame {
                     isHero = false;
                 } else {
                     jcbSelect.removeAllItems();
-                    List<Hero> heroes = DatabaseHandler.getInstance().getDB();
+                    List<Hero> heroes = DatabaseHandler.getInstance().getFromDB();
                     for (Hero hero : heroes) {
                         jcbSelect.addItem(hero.getName());
                     }

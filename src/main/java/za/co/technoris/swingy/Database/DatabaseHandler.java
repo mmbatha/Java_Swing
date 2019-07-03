@@ -139,7 +139,7 @@ public class DatabaseHandler {
         try {
             dbConnection = this.connectToDB();
             if (isDuplicateHero(dbConnection, hero)) {
-                LoggerHelper.print("Db: This Hero already exists");
+                LoggerHelper.print("Database: This Hero already exists");
             } else {
                 preparedStatement = dbConnection.prepareStatement(STATEMENT_INSERT_HERO);
                 preparedStatement.setString(1, hero.getName());
@@ -153,7 +153,7 @@ public class DatabaseHandler {
                 preparedStatement.setBinaryStream(9, serializeObject(hero, ArtifactsHelper.ARMOR), byteArray.length);
                 preparedStatement.setBinaryStream(10, serializeObject(hero, ArtifactsHelper.HELM), byteArray.length);
                 preparedStatement.executeUpdate();
-                LoggerHelper.print("Db: <" + hero.getName() + ">" + " created");
+                LoggerHelper.print("Database: <" + hero.getName() + ">" + " created");
             }
         } catch (SQLException | IOException e) {
             LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
@@ -163,7 +163,7 @@ public class DatabaseHandler {
         }
     }
 
-    public List<Hero> getDB() {
+    public List<Hero> getFromDB() {
         try {
             List<Hero> heroList = new ArrayList<>();
 
@@ -174,14 +174,14 @@ public class DatabaseHandler {
                 isHero = true;
                 Hero hero = null;
                 switch (resultSet.getString(TBL_KEY_TYPE)) {
-                    case "Warrior":
-                        hero = new Warrior();
+                    case "Villain":
+                        hero = new Villain();
                         break;
-                    case "Thief":
-                        hero = new Thief();
+                    case "Farmer":
+                        hero = new Farmer();
                         break;
-                    case "Wizard":
-                        hero = new Wizard();
+                    case "Nerd":
+                        hero = new Nerd();
                 }
                 assert hero != null;
                 hero.setName(resultSet.getString(TBL_KEY_NAME));
@@ -305,14 +305,14 @@ public class DatabaseHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 switch (resultSet.getString(TBL_KEY_TYPE)) {
-                    case "Warrior":
-                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.WARRIOR);
+                    case "Villain":
+                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.VILLAIN);
                         break;
-                    case "Thief":
-                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.THIEF);
+                    case "Farmer":
+                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.FARMER);
                         break;
-                    case "Wizard":
-                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.WIZARD);
+                    case "Nerd":
+                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.NERD);
                         break;
                 }
                 assert hero != null;

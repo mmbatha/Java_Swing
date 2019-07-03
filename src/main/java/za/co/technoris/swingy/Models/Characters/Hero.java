@@ -56,10 +56,10 @@ public abstract class Hero extends Character {
     public void attack(Character character) {
         LoggerHelper.print(this.getName() + " is attacking");
         int critical = 0;
-        if (this.getType().equals("Thief")) {
+        if (this.getType().equals("Farmer")) {
             int random = new Random().nextInt(4);
             if (random == 3) {
-                LoggerHelper.print("Critical hit !");
+                LoggerHelper.print("Critical hit!");
                 critical = this.level * 2;
             }
         }
@@ -68,20 +68,20 @@ public abstract class Hero extends Character {
             int xpEarned = 0;
             String type = this.getType();
             switch (type) {
-                case "Warrior":
-                    LoggerHelper.print(this.name + " says: Die !");
+                case "Villain":
+                    LoggerHelper.print(this.name + " says: Die!");
                     break;
-                case "Thief":
-                    LoggerHelper.print(this.name + " says: Too easy !");
+                case "Farmer":
+                    LoggerHelper.print(this.name + " says: Too easy!");
                     break;
-                case "Wizard":
-                    LoggerHelper.print(this.name + " says: Burn !");
+                case "Nerd":
+                    LoggerHelper.print(this.name + " says: Get shwifty!");
                     break;
             }
-            if (character.getType().equals("Rat")) {
+            if (character.getType().equals("Zombie")) {
                 xpEarned = (int) (Math.ceil((float)this.level / 2) * 750);
                 this.xp += xpEarned;
-            } else if (character.getType().equals("Bat")) {
+            } else if (character.getType().equals("Wolf")) {
                 xpEarned = (int) (Math.ceil((float)this.level / 2) * 500);
                 this.xp += xpEarned;
             }
