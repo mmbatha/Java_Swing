@@ -9,7 +9,7 @@
 
     <groupId>za.co.technoris</groupId>
     <artifactId>swingy</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>3.1</version>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
 		<dependency>
@@ -72,7 +72,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>fr._42.swingy.Main</mainClass>
+                            <mainClass>za.co.technoris.swingy.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -94,5 +94,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -57,8 +57,8 @@ public class CLI {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (line.matches("\\s*[1-4]\\s*")) {
-                Integer nb = Integer.parseInt(line.trim());
-                GameManager.move(nb);
+                Integer numMove = Integer.parseInt(line.trim());
+                GameManager.move(numMove);
                 GameManager.winCondition();
             } else {
                 if (line.matches("\\s*5\\s*")) {
@@ -71,7 +71,7 @@ public class CLI {
                     LoggerHelper.print("- Armor: " + hero.getArmor().getName());
                     LoggerHelper.print("- Helm: " + hero.getHelm().getName());
                 } else {
-                    LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Incorrect choice.");
+                    LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option!");
                 }
             }
             PrintHelper.printDirections();
@@ -87,13 +87,13 @@ public class CLI {
             PrintHelper.printMenu();
             return ;
         } else {
-            LoggerHelper.print(ANSI_GREEN + "Choose your hero and continue your adventure !" + ANSI_RESET);
+            LoggerHelper.print(ANSI_GREEN + "Type your hero's name and continue your adventure!" + ANSI_RESET);
         }
         isHero = false;
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            List<Hero> heroes = DatabaseHandler.getInstance().getDB();
+            List<Hero> heroes = DatabaseHandler.getInstance().getFromDB();
             boolean matchedHero = false;
             for (Hero hero : heroes) {
                 if (hero.getName().equals(line.trim())) {
@@ -104,7 +104,7 @@ public class CLI {
                 }
             }
             if (!matchedHero) {
-                LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Incorrect choice. No such hero name");
+                LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option! No such hero name");
             }
         }
     }
@@ -120,41 +120,43 @@ public class CLI {
             } else {
                 LoggerHelper.print("Enter a name:");
             }
-        }
+		}
+		scanner.close();
     }
 
     private static void createHero() {
         PrintHelper.printHeroList();
-        Scanner in = new Scanner(System.in);
-        while (in.hasNextLine()) {
-            String arg = in.nextLine();
-            if (arg.matches("\\s*[1-3]\\s*")) {
-                Integer nb = Integer.parseInt(arg.trim());
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            if (line.matches("\\s*[1-3]\\s*")) {
+                Integer nb = Integer.parseInt(line.trim());
                 switch (nb) {
                     case 1:
-                        nameHero(CharacterTypes.WARRIOR);
+                        nameHero(CharacterTypes.VILLAIN);
                         break;
                     case 2:
-                        nameHero(CharacterTypes.THIEF);
+                        nameHero(CharacterTypes.FARMER);
                         break;
                     case 3:
-                        nameHero(CharacterTypes.WIZARD);
+                        nameHero(CharacterTypes.NERD);
                         break;
                     default:
-                        LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Incorrect choice. Hero not created");
+                        LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option! Hero not created");
                         PrintHelper.printHeroList();
                         break;
                 }
                 break;
             } else {
-                if (arg.matches("\\s*see\\s+[1-3]\\s*")) {
-                    PrintHelper.printHeroDetail(Integer.parseInt(arg.split("\\s+")[1]));
+                if (line.matches("\\s*see\\s+[1-3]\\s*")) {
+                    PrintHelper.printHeroDetail(Integer.parseInt(line.split("\\s+")[1]));
                 } else {
-                    LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Incorrect choice.");
+                    LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option!");
                     PrintHelper.printHeroList();
                 }
             }
-        }
+		}
+		scanner.close();
         PrintHelper.printMenu();
     }
 }

@@ -119,7 +119,7 @@ public class GameManager {
         if (hero.getHp() <= 0) {
             LoggerHelper.print("Game Over!");
             if (!isGUI) {
-                CliView.run();
+                CLI.run();
             }
         } else if (foe.getHp() <= 0) {
             DatabaseHandler.getInstance().updateHero(hero);
@@ -198,7 +198,7 @@ public class GameManager {
         if (map.getMap()[hero.getX()][hero.getY()] == 8) {
             fightPhase = true;
             int randomNum = new Random().nextInt(3);
-            foe = (Foe) newFoe((randomNum == 2) ? CharacterTypes.RAT : CharacterTypes.BAT, hero);
+            foe = (Foe) newFoe((randomNum == 2) ? CharacterTypes.ZOMBIE : CharacterTypes.WOLF, hero);
             LoggerHelper.print("Enemy encounters: \"" + foe.getName() + "\" level " + foe.getLevel() + "!");
             fightOrRun();
         }

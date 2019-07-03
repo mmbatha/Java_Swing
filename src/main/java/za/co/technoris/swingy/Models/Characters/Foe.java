@@ -16,14 +16,14 @@ public abstract class Foe extends Character {
         character.defend(this, this.attack);
         if (character.getHp() <= 0) {
             switch (character.getType()) {
-                case "Warrior":
-                    LoggerHelper.print(this.name + " says: You, a warrior? you must be joking!");
+                case "Villain":
+                    LoggerHelper.print(this.name + " says: You, a villain? Killmonger you are NOT!");
                     break;
-                case "Thief":
-                    LoggerHelper.print(this.name + " says: Noob!");
+                case "Farmer":
+                    LoggerHelper.print(this.name + " says: Oh crop!");
                     break;
-                case "Wizard":
-                    LoggerHelper.print(this.name + " says: You are too weak!");
+                case "Nerd":
+                    LoggerHelper.print(this.name + " says: I reject your reality and substitute my own!");
                     break;
             }
         }

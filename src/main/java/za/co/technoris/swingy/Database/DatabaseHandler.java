@@ -96,10 +96,10 @@ public class DatabaseHandler {
         return (dbConnection);
     }
 
-    private ByteArrayInputStream serializeObject(Hero hero, Artifact a) throws IOException {
+    private ByteArrayInputStream serializeObject(Hero hero, ArtifactsHelper artifact) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-        switch (a) {
+        switch (artifact) {
             case WEAPON:
                 objOutputStream.writeObject(hero.getWeapon());
                 break ;
@@ -139,7 +139,7 @@ public class DatabaseHandler {
         try {
             dbConnection = this.connectToDB();
             if (isDuplicateHero(dbConnection, hero)) {
-                LoggerHelper.print("Db: This Hero already exists");
+                LoggerHelper.print("Database: This Hero already exists");
             } else {
                 preparedStatement = dbConnection.prepareStatement(STATEMENT_INSERT_HERO);
                 preparedStatement.setString(1, hero.getName());
@@ -149,11 +149,11 @@ public class DatabaseHandler {
                 preparedStatement.setInt(5, hero.getAttack());
                 preparedStatement.setInt(6, hero.getDefense());
                 preparedStatement.setInt(7, hero.getHp());
-                preparedStatement.setBinaryStream(8, serializeObject(hero, Artifacts.WEAPON), byteArray.length);
-                preparedStatement.setBinaryStream(9, serializeObject(hero, Artifacts.ARMOR), byteArray.length);
-                preparedStatement.setBinaryStream(10, serializeObject(hero, Artifacts.HELM), byteArray.length);
+                preparedStatement.setBinaryStream(8, serializeObject(hero, ArtifactsHelper.WEAPON), byteArray.length);
+                preparedStatement.setBinaryStream(9, serializeObject(hero, ArtifactsHelper.ARMOR), byteArray.length);
+                preparedStatement.setBinaryStream(10, serializeObject(hero, ArtifactsHelper.HELM), byteArray.length);
                 preparedStatement.executeUpdate();
-                LoggerHelper.print("Db: <" + hero.getName() + ">" + " created");
+                LoggerHelper.print("Database: <" + hero.getName() + ">" + " created");
             }
         } catch (SQLException | IOException e) {
             LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
@@ -163,7 +163,7 @@ public class DatabaseHandler {
         }
     }
 
-    public List<Hero> getDB() {
+    public List<Hero> getFromDB() {
         try {
             List<Hero> heroList = new ArrayList<>();
 
@@ -174,14 +174,14 @@ public class DatabaseHandler {
                 isHero = true;
                 Hero hero = null;
                 switch (resultSet.getString(TBL_KEY_TYPE)) {
-                    case "Warrior":
-                        hero = new Warrior();
+                    case "Villain":
+                        hero = new Villain();
                         break;
-                    case "Thief":
-                        hero = new Thief();
+                    case "Farmer":
+                        hero = new Farmer();
                         break;
-                    case "Wizard":
-                        hero = new Wizard();
+                    case "Nerd":
+                        hero = new Nerd();
                 }
                 assert hero != null;
                 hero.setName(resultSet.getString(TBL_KEY_NAME));
@@ -225,9 +225,9 @@ public class DatabaseHandler {
                         .append("Attack: ").append(resultSet.getInt(TBL_KEY_ATTACK)).append("\n")
                         .append("Defense: ").append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n")
                         .append("Health: ").append(resultSet.getInt(TBL_KEY_HP)).append("\n")
-                        .append("Weapon: ").append(((Artifacts) deserializeObject(resultSet, TBL_KEY_WEAPON)).getName()).append("\n")
-                        .append("Armor: ").append(((Artifacts) deserializeObject(resultSet, TBL_KEY_ARMOR)).getName()).append("\n")
-                        .append("Helm: ").append(((Artifacts) deserializeObject(resultSet, TBL_KEY_HELM)).getName()).append("\n\n");
+                        .append("Weapon: ").append(((Artifact) deserializeObject(resultSet, TBL_KEY_WEAPON)).getName()).append("\n")
+                        .append("Armor: ").append(((Artifact) deserializeObject(resultSet, TBL_KEY_ARMOR)).getName()).append("\n")
+                        .append("Helm: ").append(((Artifact) deserializeObject(resultSet, TBL_KEY_HELM)).getName()).append("\n\n");
                 heroNumber += 1;
             }
             LoggerHelper.print(sb.toString());
@@ -268,9 +268,9 @@ public class DatabaseHandler {
             preparedStatement.setInt(3, hero.getAttack());
             preparedStatement.setInt(4, hero.getDefense());
             preparedStatement.setInt(5, hero.getHp());
-            preparedStatement.setBinaryStream(6, serializeObject(((Hero)hero), Artifacts.WEAPON), byteArray.length);
-            preparedStatement.setBinaryStream(7, serializeObject(((Hero)hero), Artifacts.ARMOR), byteArray.length);
-            preparedStatement.setBinaryStream(8, serializeObject(((Hero)hero), Artifacts.HELM), byteArray.length);
+            preparedStatement.setBinaryStream(6, serializeObject(((Hero)hero), ArtifactsHelper.WEAPON), byteArray.length);
+            preparedStatement.setBinaryStream(7, serializeObject(((Hero)hero), ArtifactsHelper.ARMOR), byteArray.length);
+            preparedStatement.setBinaryStream(8, serializeObject(((Hero)hero), ArtifactsHelper.HELM), byteArray.length);
             preparedStatement.setString(9, hero.getName());
             preparedStatement.executeUpdate();
         } catch (SQLException | IOException e) {
@@ -305,14 +305,14 @@ public class DatabaseHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 switch (resultSet.getString(TBL_KEY_TYPE)) {
-                    case "Warrior":
-                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.WARRIOR);
+                    case "Villain":
+                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.VILLAIN);
                         break;
-                    case "Thief":
-                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.THIEF);
+                    case "Farmer":
+                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.FARMER);
                         break;
-                    case "Wizard":
-                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.WIZARD);
+                    case "Nerd":
+                        hero = (Hero) CharacterFactory.newHero(name, CharacterTypes.NERD);
                         break;
                 }
                 assert hero != null;
