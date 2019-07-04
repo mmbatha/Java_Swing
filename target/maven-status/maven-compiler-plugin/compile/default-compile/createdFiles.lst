@@ -29,6 +29,7 @@ za/co/technoris/swingy/Views/GraphicUser/Window$1.class
 za/co/technoris/swingy/Models/Characters/Villain.class
 za/co/technoris/swingy/Helpers/LoggerHelper.class
 za/co/technoris/swingy/Views/GraphicUser/Window$3.class
+za/co/technoris/swingy/Helpers/HeroTypes.class
 za/co/technoris/swingy/Controllers/CharacterFactory$1.class
 za/co/technoris/swingy/Controllers/MapFactory.class
 za/co/technoris/swingy/Models/Characters/Wolf.class
@@ -40,6 +41,7 @@ za/co/technoris/swingy/Helpers/ArtifactsHelper.class
 za/co/technoris/swingy/Helpers/ImageHelper.class
 za/co/technoris/swingy/Models/Characters/Hero$1.class
 za/co/technoris/swingy/Views/GraphicUser/Window$4.class
+za/co/technoris/swingy/Helpers/FoeTypes.class
 za/co/technoris/swingy/Models/Artifacts/Armor.class
 za/co/technoris/swingy/Models/Characters/Hero.class
 za/co/technoris/swingy/Views/Map.class
