@@ -73,7 +73,7 @@ class Window extends JFrame {
 	private JLabel jlblCreate = new JLabel("Create your hero");
 	private JLabel jlblSelect = new JLabel("Select the matching ID");
 	private JLabel jlblAction = new JLabel("Action");
-	private JLabel jlblEquip = new JLabel("Equip");
+	private JLabel jlblTake = new JLabel("Take");
 	private JLabel jlblLog = new JLabel("Log");
 	private JLabel jlblStats = new JLabel("Stats");
 	private JLabel jlblPic;
@@ -101,7 +101,7 @@ class Window extends JFrame {
 	private JButton jbtnValidateEncounter = new JButton("OK");
 	private JButton jbtnValidateLoot = new JButton("OK");
 	private JButton jbtnDeleteHero = new JButton("Delete");
-	private JButton jbtnRunGame = new JButton("Run!");
+	private JButton jbtnRunGame = new JButton("Begin");
 	private JButton jbtnCancelMain = new JButton("Cancel");
 	private JButton jbtnCancel = new JButton("Cancel");
 	private ButtonGroup btngrpEncounter = new ButtonGroup();
@@ -113,6 +113,7 @@ class Window extends JFrame {
 	private BufferedImage imgFarmer;
 	private BufferedImage imgNerd;
 	private BufferedImage imgWeapon;
+	private BufferedImage imgWolf;
 	private Image scaledImg;
 
 	private GridLayout gridLayout = new GridLayout();
@@ -167,6 +168,7 @@ class Window extends JFrame {
 		imgFarmer = ImageHelper.loadImage(ASSETS_DIR + "farmer.png");
 		imgNerd = ImageHelper.loadImage(ASSETS_DIR + "nerd.png");
 		imgWeapon = ImageHelper.loadImage(ASSETS_DIR + "weapon.png");
+		imgWolf = ImageHelper.loadImage(ASSETS_DIR + "wolf.png");
 		scaledImg = bgImage.getScaledInstance(window.getWidth() / 2, window.getHeight(), Image.SCALE_DEFAULT);
 		jlblPic = new JLabel(new ImageIcon(scaledImg));
 
@@ -277,7 +279,7 @@ class Window extends JFrame {
 		jpJRBLoot.add(jrbYes);
 		jpJRBLoot.add(new Box.Filler(new Dimension(50, 0), new Dimension(50, 0), new Dimension(50, 0)));
 		jpJRBLoot.add(jrbNo);
-		jpLoot.add(jlblEquip);
+		jpLoot.add(jlblTake);
 		jpLoot.add(new Box.Filler(new Dimension(0, 10), new Dimension(0, 10), new Dimension(0, 10)));
 		jpLoot.add(jpJRBLoot);
 		jpLoot.add(new Box.Filler(new Dimension(0, 10), new Dimension(0, 10), new Dimension(0, 10)));
@@ -335,7 +337,7 @@ class Window extends JFrame {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							scaledImg = imgZombie.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(),
+							scaledImg = imgWolf.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(),
 									Image.SCALE_DEFAULT);
 							if (scaledImg != null) {
 								JLabel picLabel = new JLabel(new ImageIcon(scaledImg));
@@ -522,8 +524,8 @@ class Window extends JFrame {
 	private class ButtonHeroLootListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (jrbYes.isSelected()) {
-				hero.pickUp(artifact, artifact.getType());
-				LoggerHelper.print("<" + artifact.getName() + "> taken");
+				hero.suitUp(artifact, artifact.getType());
+				LoggerHelper.print(artifact.getName() + " taken");
 			}
 			jlblStats.setText("<html>Name: " + hero.getName() + "<br>" + "Type: " + hero.getType() + "<br>" + "Level: "
 					+ hero.getLevel() + "<br>" + "Experience: " + hero.getXp() + "<br>" + "Attack: " + hero.getAttack()

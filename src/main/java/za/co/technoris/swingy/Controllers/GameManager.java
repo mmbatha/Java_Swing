@@ -21,6 +21,7 @@ import static za.co.technoris.swingy.Controllers.CharacterFactory.newFoe;
 
 public class GameManager {
 
+	private static final String GAIN_MESSAGE = "Take this artifact to gain ";
 	private final static int NORTH = 1;
 	private final static int EAST = 2;
 	private final static int SOUTH = 3;
@@ -40,30 +41,30 @@ public class GameManager {
 	}
 
 	private static void loot() {
-		int random = new Random().nextInt(2);
+		int randomNum = new Random().nextInt(2);
 
-		if (random == 1) {
+		if (randomNum == 1) {
 			LoggerHelper.print("An artifact was dropped!");
-			int random2 = new Random().nextInt(4);
+			int randomNum1 = new Random().nextInt(4);
 			int stats = hero.getLevel() + 1;
-			switch (random2) {
+			switch (randomNum1) {
 			case 0:
-				artifact = new Weapon("Good sword!", stats);
+				artifact = new Weapon("Weapon", stats);
 				LoggerHelper.print(artifact.getName() + " - Attack: " + stats);
-				LoggerHelper.print("If you take this artifact, you will gain "
-						+ (((Weapon) artifact).getAttack() - hero.getWeapon().getAttack()) + " attack points");
+				LoggerHelper.print(GAIN_MESSAGE
+						+ (((Weapon) artifact).getAttack() - hero.getWeapon().getAttack()) + " attack point(s)");
 				break;
 			case 1:
-				artifact = new Armor("Good armor!", stats);
+				artifact = new Armor("Armor", stats);
 				LoggerHelper.print(artifact.getName() + " - Defense: " + stats);
-				LoggerHelper.print("If you take this artifact, you will gain "
-						+ (((Armor) artifact).getDefense() - hero.getArmor().getDefense()) + " defense points");
+				LoggerHelper.print(GAIN_MESSAGE
+						+ (((Armor) artifact).getDefense() - hero.getArmor().getDefense()) + " defense point(s)");
 				break;
 			case 2:
-				artifact = new Helm("Good helm!", stats);
-				LoggerHelper.print(artifact.getName() + " - Hp: " + stats);
-				LoggerHelper.print("If you take this artifact, you will gain "
-						+ (((Helm) artifact).getHp() - hero.getHelm().getHp()) + " hp");
+				artifact = new Helm("Helm", stats);
+				LoggerHelper.print(artifact.getName() + " - Health: " + stats);
+				LoggerHelper.print(GAIN_MESSAGE
+						+ (((Helm) artifact).getHp() - hero.getHelm().getHp()) + " health point(s)");
 				break;
 			case 3:
 				hero.setHp(hero.getHp() + hero.getLevel() + 1);
@@ -78,10 +79,10 @@ public class GameManager {
 				while (scanner.hasNextLine()) {
 					String line = scanner.nextLine();
 					if (line.matches("\\s*[1-2]\\s*")) {
-						Integer nb = Integer.parseInt(line.trim());
+						int nb = Integer.parseInt(line.trim());
 						if (nb == 1) {
-							hero.pickUp(artifact, artifact.getType());
-							LoggerHelper.print("<" + artifact.getName() + "> taken");
+							hero.suitUp(artifact, artifact.getType());
+							LoggerHelper.print(artifact.getName() + " taken");
 							break;
 						} else if (nb == 2) {
 							break;
@@ -102,7 +103,7 @@ public class GameManager {
 
 	public static void fight(boolean fled) {
 		if (fled) {
-			LoggerHelper.print("Enemy starts attacking!");
+			LoggerHelper.print("Enemy starts attacking:");
 			while (hero.getHp() > 0 && foe.getHp() > 0) {
 				foe.attack(hero);
 				foe.attack(hero);
@@ -111,7 +112,7 @@ public class GameManager {
 				}
 			}
 		} else {
-			LoggerHelper.print("You start attacking!");
+			LoggerHelper.print("You start attacking:");
 			while (hero.getHp() > 0 && foe.getHp() > 0) {
 				hero.attack(foe);
 				if (foe.getHp() > 0) {
@@ -156,7 +157,7 @@ public class GameManager {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				if (line.matches("\\s*[1-2]\\s*")) {
-					Integer num = Integer.parseInt(line.trim());
+					int num = Integer.parseInt(line.trim());
 					switch (num) {
 					case 1:
 						fight(false);
@@ -203,7 +204,7 @@ public class GameManager {
 			fightPhase = true;
 			int randomNum = new Random().nextInt(3);
 			foe = (Foe) newFoe((randomNum == 2) ? FoeTypes.ZOMBIE : FoeTypes.WOLF, hero);
-			LoggerHelper.print("Enemy encounters: \"" + foe.getName() + "\" level " + foe.getLevel() + "!");
+			LoggerHelper.print("You're facing a level " + foe.getLevel() + " " + foe.getName() + "! Choose your action...");
 			fightOrRun();
 		}
 	}

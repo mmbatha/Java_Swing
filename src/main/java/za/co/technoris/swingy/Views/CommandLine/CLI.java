@@ -33,7 +33,7 @@ public class CLI {
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
 			if (line.matches("\\s*[1-3]\\s*")) {
-				Integer num = Integer.parseInt(line.trim());
+				int num = Integer.parseInt(line.trim());
 				switch (num) {
 				case 1:
 					createHero();
@@ -61,17 +61,17 @@ public class CLI {
 		Scanner scanner = new Scanner(System.in);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
-			if (line.matches("\\s*[1-4]\\s*")) {
-				Integer numMove = Integer.parseInt(line.trim());
+			if (line.matches("[1234]\\s*")) {
+				int numMove = Integer.parseInt(line.trim());
 				GameManager.move(numMove);
 				GameManager.winCondition();
 			} else {
-				if (line.matches("\\s*5\\s*")) {
+				if (line.matches("5\\s*")) {
 					LoggerHelper.print("- Level: " + hero.getLevel());
-					LoggerHelper.print("- Xp: " + hero.getXp());
+					LoggerHelper.print("- XP: " + hero.getXp());
 					LoggerHelper.print("- Attack: " + hero.getAttack());
 					LoggerHelper.print("- Defense: " + hero.getDefense());
-					LoggerHelper.print("- Hp: " + hero.getHp());
+					LoggerHelper.print("- HP: " + hero.getHp());
 					LoggerHelper.print("- Weapon: " + hero.getWeapon().getName());
 					LoggerHelper.print("- Armor: " + hero.getArmor().getName());
 					LoggerHelper.print("- Helm: " + hero.getHelm().getName());
@@ -136,7 +136,7 @@ public class CLI {
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
 			if (line.matches("\\s*[1-3]\\s*")) {
-				Integer nb = Integer.parseInt(line.trim());
+				int nb = Integer.parseInt(line.trim());
 				switch (nb) {
 				case 1:
 					nameHero(HeroTypes.VILLAIN);

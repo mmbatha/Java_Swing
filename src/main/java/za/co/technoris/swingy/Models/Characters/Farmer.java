@@ -6,6 +6,9 @@
  */
 package za.co.technoris.swingy.Models.Characters;
 
+import za.co.technoris.swingy.Helpers.ArtifactsHelper;
+import za.co.technoris.swingy.Models.Artifacts.*;
+
 public class Farmer extends Hero {
 
 	public Farmer() {
@@ -18,5 +21,8 @@ public class Farmer extends Hero {
 		this.attack += 7;
 		this.defense += 2;
 		this.hp += 50;
+		suitUp(new Weapon("Rusty hoe", 1), ArtifactsHelper.WEAPON);
+		suitUp(new Armor("Overalls", 1), ArtifactsHelper.ARMOR);
+		suitUp(new Helm("Straw hat", 1), ArtifactsHelper.HELM);
 	}
 }

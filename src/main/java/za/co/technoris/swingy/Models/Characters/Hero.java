@@ -35,10 +35,6 @@ public abstract class Hero extends Character {
 		this.name = name;
 		this.level = 1;
 		this.xp = 0;
-		// TODO: Change default weapon, helm and armor
-		pickUp(new Weapon("Rusted dagger", 1), ArtifactsHelper.WEAPON);
-		pickUp(new Armor("Ripped shirt", 1), ArtifactsHelper.ARMOR);
-		pickUp(new Helm("Old hat", 1), ArtifactsHelper.HELM);
 	}
 
 	public void register(Map map) {
@@ -56,7 +52,7 @@ public abstract class Hero extends Character {
 	}
 
 	public void attack(Character character) {
-		LoggerHelper.print(this.getName() + " is attacking!");
+		LoggerHelper.print(this.getName() + " attacks!");
 		int critical = 0;
 		if (this.getType().equals("Farmer")) {
 			int random = new Random().nextInt(4);
@@ -71,13 +67,13 @@ public abstract class Hero extends Character {
 			String type = this.getType();
 			switch (type) {
 			case "Villain":
-				LoggerHelper.print(this.name + " says: Die!");
+				LoggerHelper.print(this.name + " says: \"Death has claimed another!\"");
 				break;
 			case "Farmer":
-				LoggerHelper.print(this.name + " says: Too easy!");
+				LoggerHelper.print(this.name + " says: \"Too easy!\"");
 				break;
 			case "Nerd":
-				LoggerHelper.print(this.name + " says: Get shwifty!");
+				LoggerHelper.print(this.name + " says: \"Get shwifty!\"");
 				break;
 			}
 			if (character.getType().equals("Zombie")) {
@@ -114,13 +110,13 @@ public abstract class Hero extends Character {
 		LoggerHelper.print(this.name + " has leveled up. Current level: " + this.level);
 		LoggerHelper.print("- Attack: " + this.attack + " (+" + stats + ")");
 		LoggerHelper.print("- Defense: " + this.defense + " (+" + 1 + ")");
-		LoggerHelper.print("- Hp: " + this.hp + " (+" + stats + ")");
+		LoggerHelper.print("- HP: " + this.hp + " (+" + stats + ")");
 		this.attack += stats;
 		this.defense += 1;
 		this.hp += stats;
 	}
 
-	public void pickUp(Artifact artifact, ArtifactsHelper type) {
+	public void suitUp(Artifact artifact, ArtifactsHelper type) {
 		switch (type) {
 		case WEAPON:
 			if (weapon != null) {

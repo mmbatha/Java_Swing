@@ -15,18 +15,18 @@ public abstract class Foe extends Character {
 	}
 
 	public void attack(Character character) {
-		LoggerHelper.print(this.getName() + " is attacking");
+		LoggerHelper.print(this.getName() + " attacks!");
 		character.defend(this, this.attack);
 		if (character.getHp() <= 0) {
 			switch (character.getType()) {
 			case "Villain":
-				LoggerHelper.print(this.name + " says: You, a villain? Killmonger you are NOT!");
+				LoggerHelper.print(this.name + " says: \"I can do this all day!\"");
 				break;
 			case "Farmer":
-				LoggerHelper.print(this.name + " says: Oh crop!");
+				LoggerHelper.print(this.name + " says: \"Oh crop!\"");
 				break;
 			case "Nerd":
-				LoggerHelper.print(this.name + " says: I reject your reality and substitute my own!");
+				LoggerHelper.print(this.name + " says: \"I reject your reality and substitute my own!\"");
 				break;
 			}
 		}

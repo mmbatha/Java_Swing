@@ -6,6 +6,9 @@
  */
 package za.co.technoris.swingy.Models.Characters;
 
+import za.co.technoris.swingy.Helpers.ArtifactsHelper;
+import za.co.technoris.swingy.Models.Artifacts.*;
+
 public class Villain extends Hero {
 
 	public Villain() {
@@ -18,5 +21,8 @@ public class Villain extends Hero {
 		this.attack += 5;
 		this.defense += 3;
 		this.hp += 75;
+		suitUp(new Weapon("Cat ninja", 1), ArtifactsHelper.WEAPON);
+		suitUp(new Armor("Bulletproof suit", 1), ArtifactsHelper.ARMOR);
+		suitUp(new Helm("Hair gel", 1), ArtifactsHelper.HELM);
 	}
 }

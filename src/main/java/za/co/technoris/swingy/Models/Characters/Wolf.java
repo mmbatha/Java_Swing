@@ -11,7 +11,6 @@ public class Wolf extends Foe {
 	public Wolf(int level) {
 		super(level);
 		this.name = "Wolf";
-		// TODO: Refer to true types
 		this.type = "Wolf";
 		this.attack = 5 + this.level;
 		this.defense = 1 + this.level;

@@ -19,19 +19,19 @@ public class PrintHelper {
 	public static void printHeroDetail(int input) {
 		switch (input) {
 		case 1:
-			LoggerHelper.print("Vuyani, Villain level 0\n" + "- Attack: 3\n" + "- Defense: 5\n" + "- Health: 8");
+			LoggerHelper.print("Villain - Level: 0\n" + "- Attack: 3\n" + "- Defense: 5\n" + "- Health: 8");
 			break;
 		case 2:
-			LoggerHelper.print("Fezile, Farmer level 0\n" + "- Attack: 4\n" + "- Defense: 3\n" + "- Health: 5");
+			LoggerHelper.print("Farmer - Level: 0\n" + "- Attack: 4\n" + "- Defense: 3\n" + "- Health: 5");
 			break;
 		case 3:
-			LoggerHelper.print("Dexter, Nerd level 0\n" + "- Attack: 5\n" + "- Defense: 2\n" + "- Health: 3");
+			LoggerHelper.print("Nerd - Level: 0\n" + "- Attack: 5\n" + "- Defense: 2\n" + "- Health: 3");
 			break;
 		}
 	}
 
 	public static void printDirections() {
-		LoggerHelper.print("Please type a direction:\n" + "1: North\n" + "2: East\n" + "3: South\n" + "4: West\n"
+		LoggerHelper.print("Please type a direction:\n" + "8: North\n" + "6: East\n" + "2: South\n" + "4: West\n"
 				+ "5: See hero stats");
 	}
 
