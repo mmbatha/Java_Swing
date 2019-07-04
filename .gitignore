@@ -6,3 +6,5 @@ swingy.db
 .factorypath
 .project
 .classpath
+.vscode
+target/maven-archiver/pom.properties
