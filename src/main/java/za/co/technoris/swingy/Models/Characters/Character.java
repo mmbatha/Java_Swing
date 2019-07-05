@@ -23,7 +23,7 @@ public abstract class Character {
 	protected String type;
 	protected int attack;
 	protected int defense;
-	protected int hp;
+	protected int HP;
 	protected int level;
 	protected int x;
 	protected int y;

@@ -32,10 +32,10 @@ public class DatabaseHandler {
 	private static final String TBL_KEY_NAME = "name";
 	private static final String TBL_KEY_TYPE = "type";
 	private static final String TBL_KEY_LEVEL = "level";
-	private static final String TBL_KEY_XP = "xp";
+	private static final String TBL_KEY_XP = "XP";
 	private static final String TBL_KEY_ATTACK = "attack";
 	private static final String TBL_KEY_DEFENSE = "defense";
-	private static final String TBL_KEY_HP = "hp";
+	private static final String TBL_KEY_HP = "HP";
 	private static final String TBL_KEY_WEAPON = "weapon";
 	private static final String TBL_KEY_ARMOR = "armor";
 	private static final String TBL_KEY_HELM = "helm";
@@ -83,15 +83,15 @@ public class DatabaseHandler {
 			dbConnection = DriverManager.getConnection(SQLITE_URL);
 			statement = dbConnection.createStatement();
 			statement.executeUpdate(STATEMENT_CREATE_HEROES_TABLE);
-		} catch (SQLException | ClassNotFoundException e) {
-			LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
+		} catch (SQLException | ClassNotFoundException ex) {
+			LoggerHelper.print("SQLException - connectToDB(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (Exception ex) {
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -142,24 +142,24 @@ public class DatabaseHandler {
 		try {
 			dbConnection = this.connectToDB();
 			if (isDuplicateHero(dbConnection, hero)) {
-				LoggerHelper.print("Database: This Hero already exists");
+				LoggerHelper.print("Database Error: This hero already exists!");
 			} else {
 				preparedStatement = dbConnection.prepareStatement(STATEMENT_INSERT_HERO);
 				preparedStatement.setString(1, hero.getName());
 				preparedStatement.setString(2, hero.getType());
 				preparedStatement.setInt(3, hero.getLevel());
-				preparedStatement.setInt(4, hero.getXp());
+				preparedStatement.setInt(4, hero.getXP());
 				preparedStatement.setInt(5, hero.getAttack());
 				preparedStatement.setInt(6, hero.getDefense());
-				preparedStatement.setInt(7, hero.getHp());
+				preparedStatement.setInt(7, hero.getHP());
 				preparedStatement.setBinaryStream(8, serializeObject(hero, ArtifactsHelper.WEAPON), byteArray.length);
 				preparedStatement.setBinaryStream(9, serializeObject(hero, ArtifactsHelper.ARMOR), byteArray.length);
 				preparedStatement.setBinaryStream(10, serializeObject(hero, ArtifactsHelper.HELM), byteArray.length);
 				preparedStatement.executeUpdate();
-				LoggerHelper.print("Database: <" + hero.getName() + ">" + " created");
+				LoggerHelper.print("Database: <" + hero.getName() + ">" + " has been added");
 			}
-		} catch (SQLException | IOException e) {
-			LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
+		} catch (SQLException | IOException ex) {
+			LoggerHelper.print("SQLException - insertHero(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			closeAll();
@@ -190,18 +190,18 @@ public class DatabaseHandler {
 				hero.setName(resultSet.getString(TBL_KEY_NAME));
 				hero.setType(resultSet.getString(TBL_KEY_TYPE));
 				hero.setLevel(resultSet.getInt(TBL_KEY_LEVEL));
-				hero.setXp(resultSet.getInt(TBL_KEY_XP));
+				hero.setXP(resultSet.getInt(TBL_KEY_XP));
 				hero.setAttack(resultSet.getInt(TBL_KEY_ATTACK));
 				hero.setDefense(resultSet.getInt(TBL_KEY_DEFENSE));
-				hero.setHp(resultSet.getInt(TBL_KEY_HP));
+				hero.setHP(resultSet.getInt(TBL_KEY_HP));
 				hero.setWeapon((Weapon) deserializeObject(resultSet, TBL_KEY_WEAPON));
 				hero.setArmor((Armor) deserializeObject(resultSet, TBL_KEY_ARMOR));
 				hero.setHelm((Helm) deserializeObject(resultSet, TBL_KEY_HELM));
 				heroList.add(hero);
 			}
 			return (heroList);
-		} catch (SQLException | ClassNotFoundException | IOException e) {
-			LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
+		} catch (SQLException | ClassNotFoundException | IOException ex) {
+			LoggerHelper.print("SQLException - getFromDB(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			closeAll();
@@ -226,24 +226,19 @@ public class DatabaseHandler {
 						.append(resultSet.getInt(TBL_KEY_LEVEL)).append("\n").append("Experience: ")
 						.append(resultSet.getInt(TBL_KEY_XP)).append("\n").append("Attack: ")
 						.append(resultSet.getInt(TBL_KEY_ATTACK)).append("\n").append("Defense: ")
-						.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n").append("Health: ")
-						.append(resultSet.getInt(TBL_KEY_HP)).append("\n").append("Weapon: ")
-						.append(((Artifact) deserializeObject(resultSet, TBL_KEY_WEAPON)).getName()).append("\n")
-						.append("Armor: ").append(((Artifact) deserializeObject(resultSet, TBL_KEY_ARMOR)).getName())
-						.append("\n").append("Helm: ")
-						.append(((Artifact) deserializeObject(resultSet, TBL_KEY_HELM)).getName()).append("\n\n");
+						.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n").append("Health: ");
 				heroNumber += 1;
 			}
 			LoggerHelper.print(sb.toString());
-		} catch (SQLException | ClassNotFoundException | IOException e) {
-			LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
+		} catch (SQLException ex) {
+			LoggerHelper.print("SQLException - printDB(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			closeAll();
 		}
 	}
 
-	public boolean isValidId(int id) {
+	public boolean isValidID(int id) {
 		try {
 			dbConnection = this.connectToDB();
 			statement = dbConnection.createStatement();
@@ -254,8 +249,8 @@ public class DatabaseHandler {
 					return (true);
 				}
 			}
-		} catch (SQLException e) {
-			LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
+		} catch (SQLException ex) {
+			LoggerHelper.print("SQLException - isValidID(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			closeAll();
@@ -268,10 +263,10 @@ public class DatabaseHandler {
 			dbConnection = this.connectToDB();
 			preparedStatement = dbConnection.prepareStatement(STATEMENT_UPDATE_HERO_DATA);
 			preparedStatement.setInt(1, hero.getLevel());
-			preparedStatement.setInt(2, ((Hero) hero).getXp());
+			preparedStatement.setInt(2, ((Hero) hero).getXP());
 			preparedStatement.setInt(3, hero.getAttack());
 			preparedStatement.setInt(4, hero.getDefense());
-			preparedStatement.setInt(5, hero.getHp());
+			preparedStatement.setInt(5, hero.getHP());
 			preparedStatement.setBinaryStream(6, serializeObject(((Hero) hero), ArtifactsHelper.WEAPON),
 					byteArray.length);
 			preparedStatement.setBinaryStream(7, serializeObject(((Hero) hero), ArtifactsHelper.ARMOR),
@@ -280,8 +275,8 @@ public class DatabaseHandler {
 					byteArray.length);
 			preparedStatement.setString(9, hero.getName());
 			preparedStatement.executeUpdate();
-		} catch (SQLException | IOException e) {
-			LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
+		} catch (SQLException | IOException ex) {
+			LoggerHelper.print("SQLException - updateHero(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			closeAll();
@@ -294,8 +289,8 @@ public class DatabaseHandler {
 			preparedStatement = dbConnection.prepareStatement(STATEMENT_DELETE_HERO_DATA_BY_NAME);
 			preparedStatement.setString(1, name);
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
+		} catch (SQLException ex) {
+			LoggerHelper.print("SQLException - deleteDB(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			closeAll();
@@ -324,16 +319,16 @@ public class DatabaseHandler {
 				}
 				assert hero != null;
 				hero.setLevel(resultSet.getInt(TBL_KEY_LEVEL));
-				hero.setXp(resultSet.getInt(TBL_KEY_XP));
+				hero.setXP(resultSet.getInt(TBL_KEY_XP));
 				hero.setAttack(resultSet.getInt(TBL_KEY_ATTACK));
 				hero.setDefense(resultSet.getInt(TBL_KEY_DEFENSE));
-				hero.setHp(resultSet.getInt(TBL_KEY_HP));
+				hero.setHP(resultSet.getInt(TBL_KEY_HP));
 				hero.setWeapon((Weapon) deserializeObject(resultSet, TBL_KEY_WEAPON));
 				hero.setArmor((Armor) deserializeObject(resultSet, TBL_KEY_ARMOR));
 				hero.setHelm((Helm) deserializeObject(resultSet, TBL_KEY_HELM));
 			}
-		} catch (SQLException | ClassNotFoundException | IOException e) {
-			LoggerHelper.print("SQLException - connectToDB(): " + e.getMessage());
+		} catch (SQLException | ClassNotFoundException | IOException ex) {
+			LoggerHelper.print("SQLException - getHeroData(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			closeAll();
@@ -355,8 +350,8 @@ public class DatabaseHandler {
 			if (dbConnection != null && !dbConnection.isClosed()) {
 				dbConnection.close();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 }

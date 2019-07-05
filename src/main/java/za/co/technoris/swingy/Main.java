@@ -15,11 +15,12 @@ import javax.validation.Validation;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.*;
 
 public class Main {
+
 	public static void main(String[] arg) {
 		try {
 			switch (arg[0]) {
 			case "console":
-				LoggerHelper.print(ANSI_CYAN + "Welcome to \"SWINGY RPG\"" + ANSI_RESET);
+				LoggerHelper.print(ANSI_CYAN + WELCOME_MSG + ANSI_RESET);
 				factory = Validation.buildDefaultValidatorFactory();
 				CLI.run();
 				break;
@@ -31,7 +32,7 @@ public class Main {
 				LoggerHelper.print("Usage: java -jar target/swingy.jar [console/gui]");
 				break;
 			}
-		} catch (ArrayIndexOutOfBoundsException e) {
+		} catch (ArrayIndexOutOfBoundsException ex) {
 			LoggerHelper.print("Usage: java -jar target/swingy.jar [console/gui]");
 		}
 	}

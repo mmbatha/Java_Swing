@@ -15,6 +15,7 @@ import static za.co.technoris.swingy.Helpers.GlobalHelper.isHero;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.jtaLog;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.lootOption;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.map;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.WELCOME_MSG;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -64,6 +65,7 @@ class Window extends JFrame {
 
 	private static final String IMAGE_SPRITE_ERROR = "Error: Image sprite not loaded!";
 	private static final long serialVersionUID = 1L;
+
 	private JComboBox<String> jcbCreate = new JComboBox<String>();
 	private JComboBox<String> jcbSelect = new JComboBox<String>();
 	private JRadioButton jrbFight = new JRadioButton("Fight");
@@ -73,7 +75,7 @@ class Window extends JFrame {
 	private JLabel jlblCreate = new JLabel("Create your hero");
 	private JLabel jlblSelect = new JLabel("Select the matching ID");
 	private JLabel jlblAction = new JLabel("Action");
-	private JLabel jlblTake = new JLabel("Take");
+	private JLabel jlblTake = new JLabel("Take Artifact?");
 	private JLabel jlblLog = new JLabel("Log");
 	private JLabel jlblStats = new JLabel("Stats");
 	private JLabel jlblPic;
@@ -108,12 +110,12 @@ class Window extends JFrame {
 	private ButtonGroup btngrpLoot = new ButtonGroup();
 	private JScrollPane jScrollPane;
 
-	private BufferedImage imgZombie;
-	private BufferedImage imgVillain;
 	private BufferedImage imgFarmer;
 	private BufferedImage imgNerd;
+	private BufferedImage imgVillain;
 	private BufferedImage imgWeapon;
 	private BufferedImage imgWolf;
+	private BufferedImage imgZombie;
 	private Image scaledImg;
 
 	private GridLayout gridLayout = new GridLayout();
@@ -129,7 +131,7 @@ class Window extends JFrame {
 
 		jpContainer.setLayout(new BorderLayout());
 		initComponents(this);
-		LoggerHelper.print("Welcome to \"SWINGY RPG\"");
+		LoggerHelper.print(WELCOME_MSG);
 		startScreen(this);
 		this.setVisible(true);
 	}
@@ -323,8 +325,8 @@ class Window extends JFrame {
 								break;
 							}
 							if (scaledImg != null) {
-								JLabel picLabel = new JLabel(new ImageIcon(scaledImg));
-								jpCell.add(picLabel);
+								JLabel jlblPic = new JLabel(new ImageIcon(scaledImg));
+								jpCell.add(jlblPic);
 								pack();
 							} else {
 								LoggerHelper.print(IMAGE_SPRITE_ERROR);
@@ -340,11 +342,28 @@ class Window extends JFrame {
 							scaledImg = imgWolf.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(),
 									Image.SCALE_DEFAULT);
 							if (scaledImg != null) {
-								JLabel picLabel = new JLabel(new ImageIcon(scaledImg));
-								jpCell.add(picLabel);
+								JLabel jlblPic = new JLabel(new ImageIcon(scaledImg));
+								jpCell.add(jlblPic);
 								pack();
 							} else {
-								LoggerHelper.print("Error: Image sprite not loaded");
+								LoggerHelper.print(IMAGE_SPRITE_ERROR);
+							}
+						}
+					});
+					break;
+				case 3:
+					jpCell.setBackground(new Color(218, 165, 32));
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							scaledImg = imgZombie.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(),
+									Image.SCALE_DEFAULT);
+							if (scaledImg != null) {
+								JLabel jlblPic = new JLabel(new ImageIcon(scaledImg));
+								jpCell.add(jlblPic);
+								pack();
+							} else {
+								LoggerHelper.print(IMAGE_SPRITE_ERROR);
 							}
 						}
 					});
@@ -357,11 +376,11 @@ class Window extends JFrame {
 							scaledImg = imgWeapon.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(),
 									Image.SCALE_DEFAULT);
 							if (scaledImg != null) {
-								JLabel picLabel = new JLabel(new ImageIcon(scaledImg));
-								jpCell.add(picLabel);
+								JLabel jlblPic = new JLabel(new ImageIcon(scaledImg));
+								jpCell.add(jlblPic);
 								pack();
 							} else {
-								LoggerHelper.print("Error: Image sprite not loaded");
+								LoggerHelper.print(IMAGE_SPRITE_ERROR);
 							}
 						}
 					});
@@ -438,7 +457,7 @@ class Window extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			DatabaseHandler.getInstance().printDB();
 			if (!isHero) {
-				jtaLog.setText("> No saved hero");
+				jtaLog.setText(">> No such hero!");
 			} else {
 				jpCreateHero.remove(jbtnCancel);
 				jpSelectHero.add(jbtnCancel);
@@ -512,9 +531,9 @@ class Window extends JFrame {
 			} else {
 				jbtnCancelMain.setVisible(true);
 				jlblStats.setText("<html>Name: " + hero.getName() + "<br>" + "Type: " + hero.getType() + "<br>"
-						+ "Level: " + hero.getLevel() + "<br>" + "Experience: " + hero.getXp() + "<br>" + "Attack: "
+						+ "Level: " + hero.getLevel() + "<br>" + "Experience: " + hero.getXP() + "<br>" + "Attack: "
 						+ hero.getAttack() + "<br>" + "Defense: " + hero.getDefense() + "<br>" + "Health: "
-						+ hero.getHp() + "<br>" + "Weapon: " + hero.getWeapon().getName() + "<br>" + "Armor: "
+						+ hero.getHP() + "<br>" + "Weapon: " + hero.getWeapon().getName() + "<br>" + "Armor: "
 						+ hero.getArmor().getName() + "<br>" + "Helm: " + hero.getHelm().getName() + "</html>");
 			}
 			jpEncounter.setVisible(false);
@@ -528,8 +547,8 @@ class Window extends JFrame {
 				LoggerHelper.print(artifact.getName() + " taken");
 			}
 			jlblStats.setText("<html>Name: " + hero.getName() + "<br>" + "Type: " + hero.getType() + "<br>" + "Level: "
-					+ hero.getLevel() + "<br>" + "Experience: " + hero.getXp() + "<br>" + "Attack: " + hero.getAttack()
-					+ "<br>" + "Defense: " + hero.getDefense() + "<br>" + "Health: " + hero.getHp() + "<br>"
+					+ hero.getLevel() + "<br>" + "Experience: " + hero.getXP() + "<br>" + "Attack: " + hero.getAttack()
+					+ "<br>" + "Defense: " + hero.getDefense() + "<br>" + "Health: " + hero.getHP() + "<br>"
 					+ "Weapon: " + hero.getWeapon().getName() + "<br>" + "Armor: " + hero.getArmor().getName() + "<br>"
 					+ "Helm: " + hero.getHelm().getName() + "</html>");
 			jpLoot.setVisible(false);
@@ -554,8 +573,8 @@ class Window extends JFrame {
 			jpGrid.setVisible(true);
 			jlblPic.setVisible(false);
 			jlblStats.setText("<html>Name: " + hero.getName() + "<br>" + "Type: " + hero.getType() + "<br>" + "Level: "
-					+ hero.getLevel() + "<br>" + "Experience: " + hero.getXp() + "<br>" + "Attack: " + hero.getAttack()
-					+ "<br>" + "Defense: " + hero.getDefense() + "<br>" + "Health: " + hero.getHp() + "<br>"
+					+ hero.getLevel() + "<br>" + "Experience: " + hero.getXP() + "<br>" + "Attack: " + hero.getAttack()
+					+ "<br>" + "Defense: " + hero.getDefense() + "<br>" + "Health: " + hero.getHP() + "<br>"
 					+ "Weapon: " + hero.getWeapon().getName() + "<br>" + "Armor: " + hero.getArmor().getName() + "<br>"
 					+ "Helm: " + hero.getHelm().getName() + "</html>");
 			jpStats.setVisible(true);

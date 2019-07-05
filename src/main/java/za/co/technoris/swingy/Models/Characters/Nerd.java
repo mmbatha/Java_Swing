@@ -20,7 +20,7 @@ public class Nerd extends Hero {
 		this.type = "Nerd";
 		this.attack += 10;
 		this.defense += 1;
-		this.hp += 25;
+		this.HP += 25;
 		suitUp(new Weapon("Click pen", 1), ArtifactsHelper.WEAPON);
 		suitUp(new Armor("Stormtrooper outfit", 1), ArtifactsHelper.ARMOR);
 		suitUp(new Helm("Wizard hat", 1), ArtifactsHelper.HELM);

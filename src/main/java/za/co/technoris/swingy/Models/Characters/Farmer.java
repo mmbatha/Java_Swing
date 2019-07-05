@@ -20,7 +20,7 @@ public class Farmer extends Hero {
 		this.type = "Farmer";
 		this.attack += 7;
 		this.defense += 2;
-		this.hp += 50;
+		this.HP += 50;
 		suitUp(new Weapon("Rusty hoe", 1), ArtifactsHelper.WEAPON);
 		suitUp(new Armor("Overalls", 1), ArtifactsHelper.ARMOR);
 		suitUp(new Helm("Straw hat", 1), ArtifactsHelper.HELM);

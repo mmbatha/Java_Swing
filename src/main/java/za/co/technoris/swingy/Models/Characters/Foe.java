@@ -17,7 +17,7 @@ public abstract class Foe extends Character {
 	public void attack(Character character) {
 		LoggerHelper.print(this.getName() + " attacks!");
 		character.defend(this, this.attack);
-		if (character.getHp() <= 0) {
+		if (character.getHP() <= 0) {
 			switch (character.getType()) {
 			case "Villain":
 				LoggerHelper.print(this.name + " says: \"I can do this all day!\"");
@@ -38,9 +38,9 @@ public abstract class Foe extends Character {
 		if (realDamage <= 0) {
 			realDamage = 1;
 		}
-		this.hp -= realDamage;
+		this.HP -= realDamage;
 		LoggerHelper.print(character.getName() + " dealt " + realDamage + " damage to " + this.name);
-		if (hp <= 0) {
+		if (HP <= 0) {
 			LoggerHelper.print(this.name + " died");
 		}
 	}

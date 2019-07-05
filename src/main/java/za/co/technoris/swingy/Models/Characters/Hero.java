@@ -22,7 +22,7 @@ import java.util.Random;
 public abstract class Hero extends Character {
 
 	private static final String CRITICAL_HIT = "Critical (but stable) hit!";
-	private int xp;
+	private int XP;
 	private Map observer;
 	protected Weapon weapon;
 	protected Armor armor;
@@ -34,7 +34,7 @@ public abstract class Hero extends Character {
 	Hero(String name) {
 		this.name = name;
 		this.level = 1;
-		this.xp = 0;
+		this.XP = 0;
 	}
 
 	public void register(Map map) {
@@ -62,7 +62,7 @@ public abstract class Hero extends Character {
 			}
 		}
 		character.defend(this, this.attack + critical);
-		if (character.getHp() <= 0) {
+		if (character.getHP() <= 0) {
 			int xpEarned = 0;
 			String type = this.getType();
 			switch (type) {
@@ -78,13 +78,13 @@ public abstract class Hero extends Character {
 			}
 			if (character.getType().equals("Zombie")) {
 				xpEarned = (int) (Math.ceil((float) this.level / 2) * 750);
-				this.xp += xpEarned;
+				this.XP += xpEarned;
 			} else if (character.getType().equals("Wolf")) {
 				xpEarned = (int) (Math.ceil((float) this.level / 2) * 500);
-				this.xp += xpEarned;
+				this.XP += xpEarned;
 			}
 			LoggerHelper.print("You earned " + xpEarned + " XP");
-			if (this.xp >= (this.level * 1000 + Math.pow(this.level - 1, 2) * 450)) {
+			if (this.XP >= (this.level * 1000 + Math.pow(this.level - 1, 2) * 450)) {
 				leveledUp();
 			}
 		}
@@ -96,9 +96,9 @@ public abstract class Hero extends Character {
 		if (realDamage <= 0) {
 			realDamage = 1;
 		}
-		this.hp -= realDamage;
+		this.HP -= realDamage;
 		LoggerHelper.print(character.getName() + " dealt " + realDamage + " damage to " + this.name);
-		if (this.hp <= 0) {
+		if (this.HP <= 0) {
 			LoggerHelper.print(this.name + " died!");
 		}
 	}
@@ -110,10 +110,10 @@ public abstract class Hero extends Character {
 		LoggerHelper.print(this.name + " has leveled up. Current level: " + this.level);
 		LoggerHelper.print("- Attack: " + this.attack + " (+" + stats + ")");
 		LoggerHelper.print("- Defense: " + this.defense + " (+" + 1 + ")");
-		LoggerHelper.print("- HP: " + this.hp + " (+" + stats + ")");
+		LoggerHelper.print("- HP: " + this.HP + " (+" + stats + ")");
 		this.attack += stats;
 		this.defense += 1;
-		this.hp += stats;
+		this.HP += stats;
 	}
 
 	public void suitUp(Artifact artifact, ArtifactsHelper type) {
@@ -134,10 +134,10 @@ public abstract class Hero extends Character {
 			break;
 		case HELM:
 			if (helm != null) {
-				hp -= helm.getHp();
+				HP -= helm.getHP();
 			}
 			helm = (Helm) artifact;
-			hp += helm.getHp();
+			HP += helm.getHP();
 			break;
 		}
 	}

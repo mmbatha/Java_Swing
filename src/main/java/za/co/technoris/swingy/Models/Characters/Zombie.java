@@ -14,6 +14,6 @@ public class Zombie extends Foe {
 		this.type = "Zombie";
 		this.attack = 7 + this.level;
 		this.defense = 2 + this.level;
-		this.hp = 20 + this.level;
+		this.HP = 20 + this.level;
 	}
 }

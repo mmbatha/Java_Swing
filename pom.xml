@@ -50,42 +50,6 @@
 	</dependencies>
 
 	<build>
-		<!-- <plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>za.co.technoris.swingy.Main</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<descriptorRefs>
-								<descriptorRef>jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
-							<appendAssemblyId>false</appendAssemblyId>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins> -->
 		<!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
 		<plugins>
 			<!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -93,11 +57,6 @@
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>3.1.0</version>
 			</plugin>
-			<!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
-			</plugin> -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
@@ -106,10 +65,6 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.1</version>
 			</plugin>
-			<!-- <plugin>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
-			</plugin> -->
 			<plugin>
 				<artifactId>maven-install-plugin</artifactId>
 				<version>2.5.2</version>

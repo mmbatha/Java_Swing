@@ -53,10 +53,12 @@ public class Map {
 		for (int i = 0; i < mapSize; i++) {
 			for (int j = 0; j < mapSize; j++) {
 				if (map[i][j] != 1) {
-					int random = new Random().nextInt(3);
+					int random = new Random().nextInt(4);
 					if (random == 0) {
 						map[i][j] = 2;
 					}
+					else if (random == 1)
+						map[i][j] = 3;
 				}
 			}
 		}
@@ -75,6 +77,9 @@ public class Map {
 					break;
 				case 2:
 					System.out.print(ANSI_RED + box + ANSI_RESET);
+					break;
+				case 3:
+					System.out.print(ANSI_CYAN + box + ANSI_RESET);
 					break;
 				case 8:
 					System.out.print(ANSI_YELLOW + box + ANSI_RESET);

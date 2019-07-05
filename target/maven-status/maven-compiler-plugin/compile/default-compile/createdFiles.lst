@@ -21,6 +21,7 @@ za/co/technoris/swingy/Views/GraphicUser/Window$ButtonSelectListener.class
 za/co/technoris/swingy/Main.class
 za/co/technoris/swingy/Helpers/GlobalHelper.class
 za/co/technoris/swingy/Controllers/CharacterFactory.class
+za/co/technoris/swingy/Views/GraphicUser/Window$5.class
 za/co/technoris/swingy/Views/GraphicUser/Window$ComboCreateAction.class
 za/co/technoris/swingy/Database/DatabaseHandler$1.class
 za/co/technoris/swingy/Models/Artifacts/Helm.class

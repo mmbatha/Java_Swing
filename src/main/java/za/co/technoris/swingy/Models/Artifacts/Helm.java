@@ -12,11 +12,11 @@ import lombok.Getter;
 @Getter
 public class Helm extends Artifact {
 	private static final long serialVersionUID = 1L;
-	private int hp;
+	private int HP;
 
-	public Helm(String name, int hp) {
+	public Helm(String name, int HP) {
 		super(name);
 		this.type = ArtifactsHelper.HELM;
-		this.hp = hp;
+		this.HP = HP;
 	}
 }

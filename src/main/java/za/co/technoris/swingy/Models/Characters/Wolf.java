@@ -14,6 +14,6 @@ public class Wolf extends Foe {
 		this.type = "Wolf";
 		this.attack = 5 + this.level;
 		this.defense = 1 + this.level;
-		this.hp = 10 + this.level;
+		this.HP = 10 + this.level;
 	}
 }

@@ -6,12 +6,16 @@
  */
 package za.co.technoris.swingy.Controllers;
 
-import za.co.technoris.swingy.Helpers.*;
+import za.co.technoris.swingy.Helpers.FoeTypes;
+import za.co.technoris.swingy.Helpers.GlobalHelper;
+import za.co.technoris.swingy.Helpers.LoggerHelper;
+import za.co.technoris.swingy.Helpers.PrintHelper;
 import za.co.technoris.swingy.Database.DatabaseHandler;
 import za.co.technoris.swingy.Models.Artifacts.Armor;
 import za.co.technoris.swingy.Models.Artifacts.Helm;
 import za.co.technoris.swingy.Models.Artifacts.Weapon;
 import za.co.technoris.swingy.Models.Characters.Foe;
+import za.co.technoris.swingy.Models.Characters.Hero;
 import za.co.technoris.swingy.Views.CommandLine.CLI;
 
 import java.util.Random;
@@ -32,7 +36,7 @@ public class GameManager {
 	public static void winCondition() {
 		if (hero.getX() == map.getMapSize() - 1 || hero.getY() == map.getMapSize() - 1 || hero.getX() == 0
 				|| hero.getY() == 0) {
-			LoggerHelper.print("You've reached a wall! You live to die another day.");
+			LoggerHelper.print("You've reached a wall! You live to die another day.\\n----- NEW LEVEL -----\\n");
 			map = MapFactory.generateMap(hero);
 			if (!isGUI) {
 				CLI.moveHero();
@@ -51,24 +55,24 @@ public class GameManager {
 			case 0:
 				artifact = new Weapon("Weapon", stats);
 				LoggerHelper.print(artifact.getName() + " - Attack: " + stats);
-				LoggerHelper.print(GAIN_MESSAGE
-						+ (((Weapon) artifact).getAttack() - hero.getWeapon().getAttack()) + " attack point(s)");
+				LoggerHelper.print(GAIN_MESSAGE + (((Weapon) artifact).getAttack() - hero.getWeapon().getAttack())
+						+ " attack point(s)");
 				break;
 			case 1:
 				artifact = new Armor("Armor", stats);
 				LoggerHelper.print(artifact.getName() + " - Defense: " + stats);
-				LoggerHelper.print(GAIN_MESSAGE
-						+ (((Armor) artifact).getDefense() - hero.getArmor().getDefense()) + " defense point(s)");
+				LoggerHelper.print(GAIN_MESSAGE + (((Armor) artifact).getDefense() - hero.getArmor().getDefense())
+						+ " defense point(s)");
 				break;
 			case 2:
 				artifact = new Helm("Helm", stats);
 				LoggerHelper.print(artifact.getName() + " - Health: " + stats);
-				LoggerHelper.print(GAIN_MESSAGE
-						+ (((Helm) artifact).getHp() - hero.getHelm().getHp()) + " health point(s)");
+				LoggerHelper.print(
+						GAIN_MESSAGE + (((Helm) artifact).getHP() - hero.getHelm().getHP()) + " health point(s)");
 				break;
 			case 3:
-				hero.setHp(hero.getHp() + hero.getLevel() + 1);
-				LoggerHelper.print("You found a health potion! Current health: " + hero.getHp());
+				hero.setHP(hero.getHP() + hero.getLevel() + 1);
+				LoggerHelper.print("You found a health potion! Current health: " + hero.getHP());
 				return;
 			}
 			if (!isGUI) {
@@ -79,12 +83,12 @@ public class GameManager {
 				while (scanner.hasNextLine()) {
 					String line = scanner.nextLine();
 					if (line.matches("\\s*[1-2]\\s*")) {
-						int nb = Integer.parseInt(line.trim());
-						if (nb == 1) {
+						int num = Integer.parseInt(line.trim());
+						if (num == 1) {
 							hero.suitUp(artifact, artifact.getType());
 							LoggerHelper.print(artifact.getName() + " taken");
 							break;
-						} else if (nb == 2) {
+						} else if (num == 2) {
 							break;
 						} else {
 							LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option");
@@ -104,28 +108,28 @@ public class GameManager {
 	public static void fight(boolean fled) {
 		if (fled) {
 			LoggerHelper.print("Enemy starts attacking:");
-			while (hero.getHp() > 0 && foe.getHp() > 0) {
+			while (hero.getHP() > 0 && foe.getHP() > 0) {
 				foe.attack(hero);
 				foe.attack(hero);
-				if (hero.getHp() > 0) {
+				if (hero.getHP() > 0) {
 					hero.attack(foe);
 				}
 			}
 		} else {
 			LoggerHelper.print("You start attacking:");
-			while (hero.getHp() > 0 && foe.getHp() > 0) {
+			while (hero.getHP() > 0 && foe.getHP() > 0) {
 				hero.attack(foe);
-				if (foe.getHp() > 0) {
+				if (foe.getHP() > 0) {
 					foe.attack(hero);
 				}
 			}
 		}
-		if (hero.getHp() <= 0) {
+		if (hero.getHP() <= 0) {
 			LoggerHelper.print("Game Over!");
 			if (!isGUI) {
 				CLI.run();
 			}
-		} else if (foe.getHp() <= 0) {
+		} else if (foe.getHP() <= 0) {
 			DatabaseHandler.getInstance().updateHero(hero);
 			hero.setPosition(0, 0);
 			LoggerHelper.print("You win!");
@@ -200,10 +204,15 @@ public class GameManager {
 			prevMove[1] = -1;
 			break;
 		}
+
 		if (map.getMap()[hero.getX()][hero.getY()] == 8) {
 			fightPhase = true;
-			int randomNum = new Random().nextInt(3);
-			foe = (Foe) newFoe((randomNum == 2) ? FoeTypes.ZOMBIE : FoeTypes.WOLF, hero);
+			int randomNum = new Random().nextInt(4);
+			if (randomNum == 2)
+				foe = (Foe) newFoe(FoeTypes.WOLF, hero);
+			else if (randomNum == 3)
+				foe = (Foe) newFoe(FoeTypes.ZOMBIE, hero);
+			// foe = (Foe) newFoe((randomNum == 2) ? FoeTypes.ZOMBIE : FoeTypes.WOLF, hero);
 			LoggerHelper.print("You're facing a level " + foe.getLevel() + " " + foe.getName() + "! Choose your action...");
 			fightOrRun();
 		}

@@ -18,7 +18,7 @@ public class ImageHelper {
 
 		try {
 			myPicture = ImageIO.read(new File(path));
-		} catch (IOException e) {
+		} catch (IOException ex) {
 			LoggerHelper.print("Error: Image loader failed");
 			System.exit(0);
 		}

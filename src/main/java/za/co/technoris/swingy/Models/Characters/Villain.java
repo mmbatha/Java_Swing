@@ -20,7 +20,7 @@ public class Villain extends Hero {
 		this.type = "Villain";
 		this.attack += 5;
 		this.defense += 3;
-		this.hp += 75;
+		this.HP += 75;
 		suitUp(new Weapon("Cat ninja", 1), ArtifactsHelper.WEAPON);
 		suitUp(new Armor("Bulletproof suit", 1), ArtifactsHelper.ARMOR);
 		suitUp(new Helm("Hair gel", 1), ArtifactsHelper.HELM);
