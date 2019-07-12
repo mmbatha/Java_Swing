@@ -18,19 +18,15 @@ public class Main {
 
 	public static void main(String[] arg) {
 		try {
-			switch (arg[0]) {
-			case "console":
+			if ("console".equals(arg[0])) {
 				LoggerHelper.print(ANSI_CYAN + WELCOME_MSG + ANSI_RESET);
 				factory = Validation.buildDefaultValidatorFactory();
 				CLI.run();
-				break;
-			case "gui":
+			} else if ("gui".equals(arg[0])) {
 				factory = Validation.buildDefaultValidatorFactory();
 				GUI.run();
-				break;
-			default:
+			} else {
 				LoggerHelper.print("Usage: java -jar target/swingy.jar [console/gui]");
-				break;
 			}
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			LoggerHelper.print("Usage: java -jar target/swingy.jar [console/gui]");

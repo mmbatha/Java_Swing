@@ -39,7 +39,7 @@ public abstract class CharacterFactory {
 		if (constraintViolations.size() > 0) {
 			for (ConstraintViolation<Character> constraints : constraintViolations) {
 				LoggerHelper.print(constraints.getRootBeanClass().getSimpleName() + "." + constraints.getPropertyPath()
-						+ " " + constraints.getMessage());
+						+ " " + constraints.getMessage() + "\n");
 			}
 			return (null);
 		} else {

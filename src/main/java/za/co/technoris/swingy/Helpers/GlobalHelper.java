@@ -36,4 +36,5 @@ public class GlobalHelper {
 	public static Foe foe;
 	public static Artifact artifact;
 	public static Map map;
+	public static String foeType;
 }

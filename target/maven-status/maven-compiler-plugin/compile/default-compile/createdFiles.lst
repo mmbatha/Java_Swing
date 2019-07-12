@@ -28,6 +28,7 @@ za/co/technoris/swingy/Models/Artifacts/Helm.class
 za/co/technoris/swingy/Database/DatabaseHandler.class
 za/co/technoris/swingy/Views/GraphicUser/Window$1.class
 za/co/technoris/swingy/Models/Characters/Villain.class
+za/co/technoris/swingy/Models/Characters/Character$1.class
 za/co/technoris/swingy/Helpers/LoggerHelper.class
 za/co/technoris/swingy/Views/GraphicUser/Window$3.class
 za/co/technoris/swingy/Helpers/HeroTypes.class
@@ -40,7 +41,6 @@ za/co/technoris/swingy/Models/Characters/Zombie.class
 za/co/technoris/swingy/Views/GraphicUser/Window$ButtonHeroLootListener.class
 za/co/technoris/swingy/Helpers/ArtifactsHelper.class
 za/co/technoris/swingy/Helpers/ImageHelper.class
-za/co/technoris/swingy/Models/Characters/Hero$1.class
 za/co/technoris/swingy/Views/GraphicUser/Window$4.class
 za/co/technoris/swingy/Helpers/FoeTypes.class
 za/co/technoris/swingy/Models/Artifacts/Armor.class

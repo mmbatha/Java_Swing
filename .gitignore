@@ -1,9 +1,8 @@
 *.class
 .DS_Store
-swingy.db
 .idea
 .settings
 .factorypath
 .project
 .classpath
-target/maven-archiver/pom.properties
+target

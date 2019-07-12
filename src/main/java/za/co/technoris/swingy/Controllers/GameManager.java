@@ -7,7 +7,6 @@
 package za.co.technoris.swingy.Controllers;
 
 import za.co.technoris.swingy.Helpers.FoeTypes;
-import za.co.technoris.swingy.Helpers.GlobalHelper;
 import za.co.technoris.swingy.Helpers.LoggerHelper;
 import za.co.technoris.swingy.Helpers.PrintHelper;
 import za.co.technoris.swingy.Database.DatabaseHandler;
@@ -15,20 +14,29 @@ import za.co.technoris.swingy.Models.Artifacts.Armor;
 import za.co.technoris.swingy.Models.Artifacts.Helm;
 import za.co.technoris.swingy.Models.Artifacts.Weapon;
 import za.co.technoris.swingy.Models.Characters.Foe;
-import za.co.technoris.swingy.Models.Characters.Hero;
 import za.co.technoris.swingy.Views.CommandLine.CLI;
 
 import java.util.Random;
 import java.util.Scanner;
-import static za.co.technoris.swingy.Helpers.GlobalHelper.*;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.hero;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.artifact;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.map;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.isGUI;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.ANSI_RED;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.ANSI_RESET;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.fightPhase;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.lootOption;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.foe;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.encounterPhase;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.foeType;
 import static za.co.technoris.swingy.Controllers.CharacterFactory.newFoe;
 
 public class GameManager {
 
-	private static final String GAIN_MESSAGE = "Take this artifact to gain ";
-	private final static int NORTH = 1;
-	private final static int EAST = 2;
-	private final static int SOUTH = 3;
+	private static final String GAIN_MESSAGE = "Take this artifact to gain: ";
+	private final static int NORTH = 8;
+	private final static int EAST = 6;
+	private final static int SOUTH = 2;
 	private final static int WEST = 4;
 
 	private static int[] prevMove = new int[2];
@@ -36,7 +44,7 @@ public class GameManager {
 	public static void winCondition() {
 		if (hero.getX() == map.getMapSize() - 1 || hero.getY() == map.getMapSize() - 1 || hero.getX() == 0
 				|| hero.getY() == 0) {
-			LoggerHelper.print("You've reached a wall! You live to die another day.\\n----- NEW LEVEL -----\\n");
+			LoggerHelper.print("You've reached a wall! You live to die another day.\n\n----- NEW LEVEL -----\n");
 			map = MapFactory.generateMap(hero);
 			if (!isGUI) {
 				CLI.moveHero();
@@ -77,8 +85,8 @@ public class GameManager {
 			}
 			if (!isGUI) {
 				LoggerHelper.print("Would you like to keep it?");
-				LoggerHelper.print("1 - Yes");
-				LoggerHelper.print("2 - No");
+				LoggerHelper.print("1: Yes");
+				LoggerHelper.print("2: No");
 				Scanner scanner = new Scanner(System.in);
 				while (scanner.hasNextLine()) {
 					String line = scanner.nextLine();
@@ -91,13 +99,12 @@ public class GameManager {
 						} else if (num == 2) {
 							break;
 						} else {
-							LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option");
+							LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + " Invalid option");
 						}
 					} else {
-						LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option");
+						LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + " Invalid option");
 					}
 				}
-				scanner.close();
 				fightPhase = false;
 			} else {
 				lootOption = true;
@@ -107,7 +114,7 @@ public class GameManager {
 
 	public static void fight(boolean fled) {
 		if (fled) {
-			LoggerHelper.print("Enemy starts attacking:");
+			LoggerHelper.print(foe.getName() + " starts attacking:");
 			while (hero.getHP() > 0 && foe.getHP() > 0) {
 				foe.attack(hero);
 				foe.attack(hero);
@@ -125,10 +132,12 @@ public class GameManager {
 			}
 		}
 		if (hero.getHP() <= 0) {
+			// TODO: Show a message before quitting
 			LoggerHelper.print("Game Over!");
 			if (!isGUI) {
 				CLI.run();
 			}
+			System.exit(0);
 		} else if (foe.getHP() <= 0) {
 			DatabaseHandler.getInstance().updateHero(hero);
 			hero.setPosition(0, 0);
@@ -171,14 +180,13 @@ public class GameManager {
 						return;
 					}
 				} else {
-					LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option");
+					LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + " Invalid option");
 					PrintHelper.printFightOptions();
 				}
 			}
 		} else {
 			encounterPhase = true;
 		}
-		scanner.close();
 	}
 
 	public static void move(int direction) {
@@ -207,13 +215,12 @@ public class GameManager {
 
 		if (map.getMap()[hero.getX()][hero.getY()] == 8) {
 			fightPhase = true;
-			int randomNum = new Random().nextInt(4);
-			if (randomNum == 2)
+			if ("Wolf".equals(foeType))
 				foe = (Foe) newFoe(FoeTypes.WOLF, hero);
-			else if (randomNum == 3)
+			else if ("Zombie".equals(foeType))
 				foe = (Foe) newFoe(FoeTypes.ZOMBIE, hero);
-			// foe = (Foe) newFoe((randomNum == 2) ? FoeTypes.ZOMBIE : FoeTypes.WOLF, hero);
-			LoggerHelper.print("You're facing a level " + foe.getLevel() + " " + foe.getName() + "! Choose your action...");
+			LoggerHelper
+					.print("You're facing a level " + foe.getLevel() + " " + foe.getName() + "! Choose your action...");
 			fightOrRun();
 		}
 	}

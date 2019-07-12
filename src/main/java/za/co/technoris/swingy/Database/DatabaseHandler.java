@@ -11,7 +11,6 @@ import za.co.technoris.swingy.Helpers.HeroTypes;
 import za.co.technoris.swingy.Helpers.LoggerHelper;
 import za.co.technoris.swingy.Controllers.CharacterFactory;
 import za.co.technoris.swingy.Models.Artifacts.Armor;
-import za.co.technoris.swingy.Models.Artifacts.Artifact;
 import za.co.technoris.swingy.Models.Artifacts.Helm;
 import za.co.technoris.swingy.Models.Artifacts.Weapon;
 import za.co.technoris.swingy.Models.Characters.*;
@@ -156,7 +155,7 @@ public class DatabaseHandler {
 				preparedStatement.setBinaryStream(9, serializeObject(hero, ArtifactsHelper.ARMOR), byteArray.length);
 				preparedStatement.setBinaryStream(10, serializeObject(hero, ArtifactsHelper.HELM), byteArray.length);
 				preparedStatement.executeUpdate();
-				LoggerHelper.print("Database: <" + hero.getName() + ">" + " has been added");
+				LoggerHelper.print("Database: | " + hero.getName() + " |" + " has been added\n");
 			}
 		} catch (SQLException | IOException ex) {
 			LoggerHelper.print("SQLException - insertHero(): " + ex.getMessage());
@@ -221,12 +220,13 @@ public class DatabaseHandler {
 			heroNumber = 0;
 			while (resultSet.next()) {
 				isHero = true;
-				sb.append("Name: ").append(resultSet.getString(TBL_KEY_NAME)).append("\n").append("Type: ")
+				sb.append("\nName: ").append(resultSet.getString(TBL_KEY_NAME)).append("\n").append("Type: ")
 						.append(resultSet.getString(TBL_KEY_TYPE)).append("\n").append("Level: ")
 						.append(resultSet.getInt(TBL_KEY_LEVEL)).append("\n").append("Experience: ")
 						.append(resultSet.getInt(TBL_KEY_XP)).append("\n").append("Attack: ")
 						.append(resultSet.getInt(TBL_KEY_ATTACK)).append("\n").append("Defense: ")
-						.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n").append("Health: ");
+						.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n").append("Health: ")
+						.append(resultSet.getInt(TBL_KEY_HP)).append("\n");
 				heroNumber += 1;
 			}
 			LoggerHelper.print(sb.toString());

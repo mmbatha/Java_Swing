@@ -19,7 +19,13 @@ import za.co.technoris.swingy.Views.GraphicUser.GUI;
 import java.util.List;
 import java.util.Scanner;
 
-import static za.co.technoris.swingy.Helpers.GlobalHelper.*;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.hero;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.isHero;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.map;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.isGUI;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.ANSI_RED;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.ANSI_RESET;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.ANSI_GREEN;
 
 public class CLI {
 
@@ -30,65 +36,46 @@ public class CLI {
 		LoggerHelper.print("------- MODE: Console -------");
 		PrintHelper.printMenu();
 
-		// String input = System.console();
-		int lint = Integer.parseInt(System.console().readLine());
-
-		if (lint == 1 || lint == 2 || lint == 3) {
-			switch (lint) {
-			case 1:
-				createHero();
-				break;
-			case 2:
-				selectHero();
-				break;
-			case 3:
-				GUI.run();
-				break;
-			default:
-				LoggerHelper.print(ANSI_RED + ">>" + ANSI_RESET + INVALID_OPTION);
-				PrintHelper.printMenu();
-			}
-		} else {
-			LoggerHelper.print(ANSI_RED + ">>" + ANSI_RESET + INVALID_OPTION);
-			PrintHelper.printMenu();
-		}
-		// extracted();
+		extracted();
 	}
 
 	private static void extracted() {
 		Scanner scanner = new Scanner(System.in);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
-			if (line.matches("\\s*[1-3]\\s*")) {
+			if (line.matches("\\s*[0-3]\\s*")) {
 				int num = Integer.parseInt(line.trim());
 				switch (num) {
+				case 0:
+					System.exit(0);
+					break;
 				case 1:
 					createHero();
 					break;
 				case 2:
+				// TODO: Allow case-insensitive searching of hero or search by index
 					selectHero();
 					break;
 				case 3:
 					GUI.run();
 					return;
 				default:
-					LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + INVALID_OPTION);
+					LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + INVALID_OPTION);
 					PrintHelper.printMenu();
 				}
 			} else {
-				LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + INVALID_OPTION);
+				LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + INVALID_OPTION);
 				PrintHelper.printMenu();
 			}
 		}
-		scanner.close();
 	}
 
 	public static void moveHero() {
-		PrintHelper.printDirections();
+		PrintHelper.printDirections(hero.getName());
 		Scanner scanner = new Scanner(System.in);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
-			if (line.matches("[1234]\\s*")) {
+			if (line.matches("[2468]\\s*")) {
 				int numMove = Integer.parseInt(line.trim());
 				GameManager.move(numMove);
 				GameManager.winCondition();
@@ -101,21 +88,22 @@ public class CLI {
 					LoggerHelper.print("- HP: " + hero.getHP());
 					LoggerHelper.print("- Weapon: " + hero.getWeapon().getName());
 					LoggerHelper.print("- Armor: " + hero.getArmor().getName());
-					LoggerHelper.print("- Helm: " + hero.getHelm().getName());
+					LoggerHelper.print("- Helm: " + hero.getHelm().getName() + "\n");
+				} else if (line.matches("0\\s*")) {
+					System.exit(0);
 				} else {
-					LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + INVALID_OPTION);
+					LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + INVALID_OPTION);
 				}
 			}
-			PrintHelper.printDirections();
+			PrintHelper.printDirections(hero.getName());
 		}
-		scanner.close();
 	}
 
 	private static void selectHero() {
 		LoggerHelper.print(ANSI_GREEN + "You can pick:" + ANSI_RESET);
 		DatabaseHandler.getInstance().printDB();
 		if (!isHero) {
-			LoggerHelper.print(ANSI_RED + ">>" + ANSI_RESET + " No such hero!");
+			LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + " No such hero!\n");
 			PrintHelper.printMenu();
 			return;
 		} else {
@@ -123,24 +111,7 @@ public class CLI {
 		}
 		isHero = false;
 
-		String heroName = System.console().readLine();
-
-		while (heroName != null) {
-			List<Hero> heroes = DatabaseHandler.getInstance().getFromDB();
-			boolean matchedHero = false;
-			for (Hero hero : heroes) {
-				if (hero.getName().equals(heroName)) {
-					hero = DatabaseHandler.getInstance().getHeroData(hero.getName());
-					map = MapFactory.generateMap(hero);
-					moveHero();
-					matchedHero = true;
-				}
-			}
-			if (!matchedHero) {
-				LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option! No such hero name");
-			}
-		}
-		// extracted2();
+		extracted2();
 	}
 
 	private static void extracted2() {
@@ -149,32 +120,23 @@ public class CLI {
 			String line = scanner.nextLine();
 			List<Hero> heroes = DatabaseHandler.getInstance().getFromDB();
 			boolean matchedHero = false;
-			for (Hero hero : heroes) {
-				if (hero.getName().equals(line.trim())) {
-					hero = DatabaseHandler.getInstance().getHeroData(hero.getName());
+			for (Hero h : heroes) {
+				if (h.getName().equals(line.trim())) {
+					hero = DatabaseHandler.getInstance().getHeroData(h.getName());
 					map = MapFactory.generateMap(hero);
 					moveHero();
 					matchedHero = true;
 				}
 			}
 			if (!matchedHero) {
-				LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option! No such hero name");
+				LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + " Invalid option! No such hero! Try again...\n");
 			}
 		}
-		// scanner.close();
 	}
 
 	private static void nameHero(HeroTypes heroType) {
 		LoggerHelper.print("Enter a name:");
-		// extracted3(type);
-		String heroName = System.console().readLine();
-		while (heroName != null) {
-			if (CharacterFactory.newHero(heroName, heroType) != null) {
-				DatabaseHandler.getInstance().insertHero((Hero) CharacterFactory.newHero(heroName, heroType));
-				break;
-			} else
-				LoggerHelper.print("Enter a name:");
-		}
+		extracted3(heroType);
 	}
 
 	private static void extracted3(HeroTypes type) {
@@ -188,55 +150,25 @@ public class CLI {
 				LoggerHelper.print("Enter a name:");
 			}
 		}
-		// scanner.close();
 	}
 
 	private static void createHero() {
 		PrintHelper.printHeroList();
 
-		String input = System.console().readLine();
-		while (!input.isEmpty()) {
-
-			int option = Integer.parseInt(input);
-
-			if (option == 1 || option == 2 || option == 3) {
-				switch (option) {
-				case 1:
-					nameHero(HeroTypes.VILLAIN);
-					break;
-				case 2:
-					nameHero(HeroTypes.FARMER);
-					break;
-				case 3:
-					nameHero(HeroTypes.NERD);
-					break;
-				default:
-					LoggerHelper.print(ANSI_RED + ">" + ANSI_RESET + " Invalid option! Hero not created");
-					PrintHelper.printHeroList();
-					break;
-				}
-				break;
-			} else {
-				if (input.matches("\\s*see\\s+[1-3]\\s*")) {
-					PrintHelper.printHeroDetail(Integer.parseInt(input.split("\\s+")[1]));
-				} else {
-					LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + INVALID_OPTION);
-					PrintHelper.printHeroList();
-				}
-			}
-
-			// extracted4();
-			PrintHelper.printMenu();
-		}
+		extracted4();
+		PrintHelper.printMenu();
 	}
 
 	private static void extracted4() {
 		Scanner scanner = new Scanner(System.in);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
-			if (line.matches("\\s*[1-3]\\s*")) {
+			if (line.matches("\\s*[0-3]\\s*")) {
 				int num = Integer.parseInt(line.trim());
 				switch (num) {
+				case 0:
+					System.exit(0);
+					break;
 				case 1:
 					nameHero(HeroTypes.VILLAIN);
 					break;
@@ -253,7 +185,7 @@ public class CLI {
 				}
 				break;
 			} else {
-				if (line.matches("\\s*see\\s+[1-3]\\s*")) {
+				if (line.matches("\\s*see\\s+[0-3]\\s*")) {
 					PrintHelper.printHeroDetail(Integer.parseInt(line.split("\\s+")[1]));
 				} else {
 					LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + INVALID_OPTION);
@@ -261,6 +193,5 @@ public class CLI {
 				}
 			}
 		}
-		// scanner.close();
 	}
 }

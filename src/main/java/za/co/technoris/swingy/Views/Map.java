@@ -30,6 +30,10 @@ public class Map {
 		prevPosition[0] = hero.getX();
 		prevPosition[1] = hero.getY();
 		if (this.map[hero.getX()][hero.getY()] == 2) {
+			foeType = "Wolf";
+			this.map[hero.getX()][hero.getY()] = 8;
+		} else if (this.map[hero.getX()][hero.getY()] == 3) {
+			foeType = "Zombie";
 			this.map[hero.getX()][hero.getY()] = 8;
 		} else {
 			this.map[hero.getX()][hero.getY()] = 1;

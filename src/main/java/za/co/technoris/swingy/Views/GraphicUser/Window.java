@@ -40,6 +40,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -61,7 +64,7 @@ import za.co.technoris.swingy.Models.Characters.Character;
 import za.co.technoris.swingy.Models.Characters.Hero;
 import za.co.technoris.swingy.Views.CommandLine.CLI;
 
-class Window extends JFrame {
+public class Window extends JFrame {
 
 	private static final String IMAGE_SPRITE_ERROR = "Error: Image sprite not loaded!";
 	private static final long serialVersionUID = 1L;
@@ -73,7 +76,7 @@ class Window extends JFrame {
 	private JRadioButton jrbYes = new JRadioButton("Yes");
 	private JRadioButton jrbNo = new JRadioButton("No");
 	private JLabel jlblCreate = new JLabel("Create your hero");
-	private JLabel jlblSelect = new JLabel("Select the matching ID");
+	private JLabel jlblSelect = new JLabel("Select your hero");
 	private JLabel jlblAction = new JLabel("Action");
 	private JLabel jlblTake = new JLabel("Take Artifact?");
 	private JLabel jlblLog = new JLabel("Log");
@@ -98,7 +101,6 @@ class Window extends JFrame {
 
 	private JButton jbtnCreate = new JButton("Create a new hero");
 	private JButton jbtnSelect = new JButton("Select a hero");
-	private JButton jbtnSwitch = new JButton("Switch to Console");
 	private JButton jbtnValidateCreation = new JButton("Create");
 	private JButton jbtnValidateEncounter = new JButton("OK");
 	private JButton jbtnValidateLoot = new JButton("OK");
@@ -122,8 +124,12 @@ class Window extends JFrame {
 
 	private static final String ASSETS_DIR = "src/main/java/za/co/technoris/swingy/Assets/";
 
+	private JMenuBar menuBar = new JMenuBar();
+	private JMenu menuBtn = new JMenu("Switch Views");
+	private JMenuItem switchMenuItem = new JMenuItem("Switch to Console...");
+
 	Window() {
-		setTitle("Swingy");
+		setTitle("Swingy RPG");
 		setSize(1280, 720);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -139,7 +145,6 @@ class Window extends JFrame {
 	private void startScreen(Window window) {
 		jpMenu.add(jbtnCreate);
 		jpMenu.add(jbtnSelect);
-		jpMenu.add(jbtnSwitch);
 		jpMenu.add(jpStats);
 		jpMenu.add(jpCreateHero);
 		jpMenu.add(jpSelectHero);
@@ -150,7 +155,10 @@ class Window extends JFrame {
 		jpMap.add(jlblPic);
 		jpMap.add(jpGrid);
 		jpMenu.add(jbtnCancelMain);
+		menuBar.add(menuBtn);
+		menuBtn.add(switchMenuItem);
 
+		jpContainer.add(menuBar, BorderLayout.NORTH);
 		jpContainer.add(jpMenu, BorderLayout.WEST);
 		jpContainer.add(jpMap, BorderLayout.CENTER);
 		jpContainer.add(jpLog, BorderLayout.EAST);
@@ -158,8 +166,11 @@ class Window extends JFrame {
 		window.setContentPane(jpContainer);
 	}
 
+	// TODO: Use JOptionPanes for 'Fight/Run from Enemy' and 'Take/Leave Artifact' scenarios
+
 	private void initComponents(Window window) {
 		jtaLog = new JTextArea("", 40, 25);
+		// jtaLog = new JTextArea("", 25, 100);
 		jScrollPane = new JScrollPane(jtaLog);
 		jtaLog.setEditable(false);
 
@@ -194,8 +205,7 @@ class Window extends JFrame {
 		jbtnCreate.addActionListener(new ButtonCreateListener());
 		jbtnSelect.setPreferredSize(new Dimension(200, 50));
 		jbtnSelect.addActionListener(new ButtonSelectListener());
-		jbtnSwitch.setPreferredSize(new Dimension(200, 50));
-		jbtnSwitch.addActionListener(new ButtonHeroSwitchListener());
+		switchMenuItem.addActionListener(new ButtonHeroSwitchListener());
 		jbtnValidateCreation.setPreferredSize(new Dimension(200, 40));
 		jbtnValidateCreation.addActionListener(new ButtonHeroCreateListener());
 		jbtnValidateCreation.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -393,11 +403,11 @@ class Window extends JFrame {
 				jpCell.addMouseListener(new MouseListener() {
 					public void mouseClicked(MouseEvent e) {
 						if (x + 1 < map.getMapSize() && map.getMap()[x + 1][y] == 1) {
-							GameManager.move(1);
+							GameManager.move(8);
 						} else if (y - 1 >= 0 && map.getMap()[x][y - 1] == 1) {
-							GameManager.move(2);
+							GameManager.move(6);
 						} else if (x - 1 >= 0 && map.getMap()[x - 1][y] == 1) {
-							GameManager.move(3);
+							GameManager.move(2);
 						} else if (y + 1 < map.getMapSize() && map.getMap()[x][y + 1] == 1) {
 							GameManager.move(4);
 						}
@@ -446,7 +456,7 @@ class Window extends JFrame {
 			jpCreateHero.add(jbtnCancel);
 			jbtnCreate.setVisible(false);
 			jbtnSelect.setVisible(false);
-			jbtnSwitch.setVisible(false);
+			switchMenuItem.setVisible(false);
 			jpCreateHero.setVisible(true);
 
 			PrintHelper.printHeroDetail(1);
@@ -457,13 +467,13 @@ class Window extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			DatabaseHandler.getInstance().printDB();
 			if (!isHero) {
-				jtaLog.setText(">> No such hero!");
+				jtaLog.setText(">> No such hero!\n");
 			} else {
 				jpCreateHero.remove(jbtnCancel);
 				jpSelectHero.add(jbtnCancel);
 				jbtnCreate.setVisible(false);
 				jbtnSelect.setVisible(false);
-				jbtnSwitch.setVisible(false);
+				switchMenuItem.setVisible(false);
 				jcbSelect.removeAllItems();
 				List<Hero> heroes = DatabaseHandler.getInstance().getFromDB();
 				for (Hero hero : heroes) {
@@ -495,7 +505,7 @@ class Window extends JFrame {
 				jpCreateHero.setVisible(false);
 				jbtnCreate.setVisible(true);
 				jbtnSelect.setVisible(true);
-				jbtnSwitch.setVisible(true);
+				switchMenuItem.setVisible(true);
 			}
 		}
 	}
@@ -594,7 +604,7 @@ class Window extends JFrame {
 					jpSelectHero.setVisible(false);
 					jbtnCreate.setVisible(true);
 					jbtnSelect.setVisible(true);
-					jbtnSwitch.setVisible(true);
+					switchMenuItem.setVisible(true);
 					isHero = false;
 				} else {
 					jcbSelect.removeAllItems();
@@ -617,7 +627,7 @@ class Window extends JFrame {
 			jbtnCancelMain.setVisible(false);
 			jbtnCreate.setVisible(true);
 			jbtnSelect.setVisible(true);
-			jbtnSwitch.setVisible(true);
+			switchMenuItem.setVisible(true);
 		}
 	}
 
@@ -628,7 +638,7 @@ class Window extends JFrame {
 			jpSelectHero.setVisible(false);
 			jbtnCreate.setVisible(true);
 			jbtnSelect.setVisible(true);
-			jbtnSwitch.setVisible(true);
+			switchMenuItem.setVisible(true);
 		}
 	}
 

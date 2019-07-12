@@ -15,7 +15,7 @@ public abstract class Foe extends Character {
 	}
 
 	public void attack(Character character) {
-		LoggerHelper.print(this.getName() + " attacks!");
+		LoggerHelper.print(this.getName() + " attacks...");
 		character.defend(this, this.attack);
 		if (character.getHP() <= 0) {
 			switch (character.getType()) {
@@ -28,6 +28,8 @@ public abstract class Foe extends Character {
 			case "Nerd":
 				LoggerHelper.print(this.name + " says: \"I reject your reality and substitute my own!\"");
 				break;
+			default:
+				LoggerHelper.print(this.name + " says: \"OOOOOHHH NOOOOO!! The PAAAAAAAIIIINNNNN!!\"");
 			}
 		}
 	}
@@ -39,9 +41,9 @@ public abstract class Foe extends Character {
 			realDamage = 1;
 		}
 		this.HP -= realDamage;
-		LoggerHelper.print(character.getName() + " dealt " + realDamage + " damage to " + this.name);
+		LoggerHelper.print(character.getName() + " dealt " + realDamage + " points worth of damage to " + this.name + "!!");
 		if (HP <= 0) {
-			LoggerHelper.print(this.name + " died");
+			LoggerHelper.print(this.name + " died!");
 		}
 	}
 }
