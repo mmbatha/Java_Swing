@@ -34,7 +34,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -45,7 +44,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -56,6 +54,7 @@ import za.co.technoris.swingy.Controllers.CharacterFactory;
 import za.co.technoris.swingy.Controllers.GameManager;
 import za.co.technoris.swingy.Controllers.MapFactory;
 import za.co.technoris.swingy.Database.DatabaseHandler;
+import za.co.technoris.swingy.Helpers.ArtifactsHelper;
 import za.co.technoris.swingy.Helpers.HeroTypes;
 import za.co.technoris.swingy.Helpers.ImageHelper;
 import za.co.technoris.swingy.Helpers.LoggerHelper;
@@ -71,10 +70,6 @@ public class Window extends JFrame {
 
 	private JComboBox<String> jcbCreate = new JComboBox<String>();
 	private JComboBox<String> jcbSelect = new JComboBox<String>();
-	private JRadioButton jrbFight = new JRadioButton("Fight");
-	private JRadioButton jrbRun = new JRadioButton("Run");
-	private JRadioButton jrbYes = new JRadioButton("Yes");
-	private JRadioButton jrbNo = new JRadioButton("No");
 	private JLabel jlblCreate = new JLabel("Create your hero");
 	private JLabel jlblSelect = new JLabel("Select your hero");
 	private JLabel jlblAction = new JLabel("Action");
@@ -91,10 +86,6 @@ public class Window extends JFrame {
 	private JPanel jpLog = new JPanel();
 	private JPanel jpCreateHero = new JPanel();
 	private JPanel jpSelectHero = new JPanel();
-	private JPanel jpEncounter = new JPanel();
-	private JPanel jpLoot = new JPanel();
-	private JPanel jpJRBEncounter = new JPanel();
-	private JPanel jpJRBLoot = new JPanel();
 	private JPanel jpGrid = new JPanel();
 	private JPanel jpStats = new JPanel();
 	private JPanel jpInput = new JPanel();
@@ -102,14 +93,10 @@ public class Window extends JFrame {
 	private JButton jbtnCreate = new JButton("Create a new hero");
 	private JButton jbtnSelect = new JButton("Select a hero");
 	private JButton jbtnValidateCreation = new JButton("Create");
-	private JButton jbtnValidateEncounter = new JButton("OK");
-	private JButton jbtnValidateLoot = new JButton("OK");
 	private JButton jbtnDeleteHero = new JButton("Delete");
 	private JButton jbtnRunGame = new JButton("Begin");
 	private JButton jbtnCancelMain = new JButton("Cancel");
 	private JButton jbtnCancel = new JButton("Cancel");
-	private ButtonGroup btngrpEncounter = new ButtonGroup();
-	private ButtonGroup btngrpLoot = new ButtonGroup();
 	private JScrollPane jScrollPane;
 
 	private BufferedImage imgFarmer;
@@ -118,6 +105,10 @@ public class Window extends JFrame {
 	private BufferedImage imgWeapon;
 	private BufferedImage imgWolf;
 	private BufferedImage imgZombie;
+	private BufferedImage imgArmour;
+	private BufferedImage imgHealth;
+	private BufferedImage imgFight;
+	private BufferedImage imgFoe;
 	private Image scaledImg;
 
 	private GridLayout gridLayout = new GridLayout();
@@ -148,8 +139,6 @@ public class Window extends JFrame {
 		jpMenu.add(jpStats);
 		jpMenu.add(jpCreateHero);
 		jpMenu.add(jpSelectHero);
-		jpMenu.add(jpEncounter);
-		jpMenu.add(jpLoot);
 		jpLog.add(jlblLog);
 		jpLog.add(jScrollPane);
 		jpMap.add(jlblPic);
@@ -158,21 +147,20 @@ public class Window extends JFrame {
 		menuBar.add(menuBtn);
 		menuBtn.add(switchMenuItem);
 
-		jpContainer.add(menuBar, BorderLayout.NORTH);
-		jpContainer.add(jpMenu, BorderLayout.WEST);
+		jpContainer.add(menuBar, BorderLayout.PAGE_START);
+		jpContainer.add(jpMenu, BorderLayout.LINE_START);
 		jpContainer.add(jpMap, BorderLayout.CENTER);
-		jpContainer.add(jpLog, BorderLayout.EAST);
+		jpContainer.add(jpLog, BorderLayout.LINE_END);
 
 		window.setContentPane(jpContainer);
 	}
 
-	// TODO: Use JOptionPanes for 'Fight/Run from Enemy' and 'Take/Leave Artifact' scenarios
-
 	private void initComponents(Window window) {
 		jtaLog = new JTextArea("", 40, 25);
-		// jtaLog = new JTextArea("", 25, 100);
 		jScrollPane = new JScrollPane(jtaLog);
 		jtaLog.setEditable(false);
+		jtaLog.setLineWrap(true);
+		jtaLog.setWrapStyleWord(true);
 
 		((FlowLayout) jpMap.getLayout()).setVgap(0);
 		BufferedImage bgImage = ImageHelper.loadImage(ASSETS_DIR + "img.png");
@@ -182,17 +170,21 @@ public class Window extends JFrame {
 		imgNerd = ImageHelper.loadImage(ASSETS_DIR + "nerd.png");
 		imgWeapon = ImageHelper.loadImage(ASSETS_DIR + "weapon.png");
 		imgWolf = ImageHelper.loadImage(ASSETS_DIR + "wolf.png");
-		scaledImg = bgImage.getScaledInstance(window.getWidth() / 2, window.getHeight(), Image.SCALE_DEFAULT);
+		imgArmour = ImageHelper.loadImage(ASSETS_DIR + "armour.png");
+		imgHealth = ImageHelper.loadImage(ASSETS_DIR + "health.png");
+		imgFight = ImageHelper.loadImage(ASSETS_DIR + "weapon2.png");
+		imgFoe = ImageHelper.loadImage(ASSETS_DIR + "foe.png");
+		scaledImg = bgImage;
 		jlblPic = new JLabel(new ImageIcon(scaledImg));
 
 		jpMenu.setPreferredSize(new Dimension(window.getWidth() / 4, window.getHeight()));
-		jpMenu.setBackground(Color.LIGHT_GRAY);
+		jpMenu.setBackground(new Color(250, 250, 250));
 		jpMap.setPreferredSize(new Dimension(window.getWidth() / 2, window.getHeight()));
-		jpMap.setBackground(Color.LIGHT_GRAY);
+		jpMap.setBackground(new Color(250, 250, 250));
 		jpLog.setPreferredSize(new Dimension(window.getWidth() / 4, window.getHeight()));
-		jpLog.setBackground(Color.LIGHT_GRAY);
+		jpLog.setBackground(new Color(250, 250, 250));
 		jpGrid.setPreferredSize(new Dimension(window.getWidth() / 2, window.getHeight()));
-		jpGrid.setBackground(Color.LIGHT_GRAY);
+		jpGrid.setBackground(new Color(250, 250, 250));
 
 		jcbCreate.addItem("Villain");
 		jcbCreate.addItem("Farmer");
@@ -210,14 +202,6 @@ public class Window extends JFrame {
 		jbtnValidateCreation.addActionListener(new ButtonHeroCreateListener());
 		jbtnValidateCreation.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jbtnValidateCreation.setMaximumSize(getSize());
-		jbtnValidateEncounter.setPreferredSize(new Dimension(200, 40));
-		jbtnValidateEncounter.addActionListener(new ButtonHeroEncounterListener());
-		jbtnValidateEncounter.setAlignmentX(Component.CENTER_ALIGNMENT);
-		jbtnValidateEncounter.setMaximumSize(getSize());
-		jbtnValidateLoot.setPreferredSize(new Dimension(200, 40));
-		jbtnValidateLoot.addActionListener(new ButtonHeroLootListener());
-		jbtnValidateLoot.setAlignmentX(Component.CENTER_ALIGNMENT);
-		jbtnValidateLoot.setMaximumSize(getSize());
 		jbtnRunGame.setPreferredSize(new Dimension(200, 40));
 		jbtnRunGame.addActionListener(new ButtonRunListener());
 		jbtnRunGame.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -226,7 +210,7 @@ public class Window extends JFrame {
 		jbtnDeleteHero.addActionListener(new ButtonDeleteHeroListener());
 		jbtnDeleteHero.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jbtnDeleteHero.setMaximumSize(getSize());
-		jbtnDeleteHero.setForeground(Color.RED);
+		jbtnDeleteHero.setForeground(new Color(255, 99, 71));
 		jbtnCancel.setPreferredSize(new Dimension(200, 40));
 		jbtnCancel.addActionListener(new ButtonCancelListener());
 		jbtnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -238,6 +222,7 @@ public class Window extends JFrame {
 		jlblCreate.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jlblSelect.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jlblAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+		jlblTake.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jtfInput.setPreferredSize(new Dimension(150, 40));
 
 		Box verticalBox = Box.createVerticalBox();
@@ -267,37 +252,6 @@ public class Window extends JFrame {
 		jpSelectHero.setVisible(false);
 		jcbSelect.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		jpEncounter.setPreferredSize(new Dimension(300, 100));
-		jpEncounter.setLayout(new BoxLayout(jpEncounter, BoxLayout.Y_AXIS));
-		jpJRBEncounter.setLayout(new BoxLayout(jpJRBEncounter, BoxLayout.X_AXIS));
-		btngrpEncounter.add(jrbFight);
-		btngrpEncounter.add(jrbRun);
-		jrbFight.setSelected(true);
-		jpJRBEncounter.add(jrbFight);
-		jpJRBEncounter.add(new Box.Filler(new Dimension(50, 0), new Dimension(50, 0), new Dimension(50, 0)));
-		jpJRBEncounter.add(jrbRun);
-		jpEncounter.add(jlblAction);
-		jpEncounter.add(new Box.Filler(new Dimension(0, 10), new Dimension(0, 10), new Dimension(0, 10)));
-		jpEncounter.add(jpJRBEncounter);
-		jpEncounter.add(new Box.Filler(new Dimension(0, 10), new Dimension(0, 10), new Dimension(0, 10)));
-		jpEncounter.add(jbtnValidateEncounter);
-
-		jpLoot.setPreferredSize(new Dimension(300, 100));
-		jpLoot.setLayout(new BoxLayout(jpLoot, BoxLayout.Y_AXIS));
-		jpJRBLoot.setLayout(new BoxLayout(jpJRBLoot, BoxLayout.X_AXIS));
-		btngrpLoot.add(jrbYes);
-		btngrpLoot.add(jrbNo);
-		jrbYes.setSelected(true);
-		jpJRBLoot.add(jrbYes);
-		jpJRBLoot.add(new Box.Filler(new Dimension(50, 0), new Dimension(50, 0), new Dimension(50, 0)));
-		jpJRBLoot.add(jrbNo);
-		jpLoot.add(jlblTake);
-		jpLoot.add(new Box.Filler(new Dimension(0, 10), new Dimension(0, 10), new Dimension(0, 10)));
-		jpLoot.add(jpJRBLoot);
-		jpLoot.add(new Box.Filler(new Dimension(0, 10), new Dimension(0, 10), new Dimension(0, 10)));
-		jpLoot.add(jbtnValidateLoot);
-		jpEncounter.setVisible(false);
-		jpLoot.setVisible(false);
 		jpGrid.setLayout(gridLayout);
 		jpGrid.setVisible(false);
 
@@ -313,10 +267,10 @@ public class Window extends JFrame {
 				final JPanel jpCell = new JPanel();
 				((FlowLayout) jpCell.getLayout()).setVgap(0);
 				((FlowLayout) jpCell.getLayout()).setHgap(0);
-				jpCell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				jpCell.setBorder(BorderFactory.createLineBorder(new Color(211, 211, 211)));
 				switch (mapValue) {
 				case 1:
-					jpCell.setBackground(new Color(135, 206, 235));
+					jpCell.setBackground(new Color(0, 191, 255));
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
@@ -345,7 +299,7 @@ public class Window extends JFrame {
 					});
 					break;
 				case 2:
-					jpCell.setBackground(new Color(171, 127, 127));
+					jpCell.setBackground(new Color(50, 49, 50));
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
@@ -362,7 +316,7 @@ public class Window extends JFrame {
 					});
 					break;
 				case 3:
-					jpCell.setBackground(new Color(218, 165, 32));
+					jpCell.setBackground(new Color(140, 90, 24));
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
@@ -379,10 +333,11 @@ public class Window extends JFrame {
 					});
 					break;
 				case 8:
-					jpCell.setBackground(new Color(255, 178, 102));
+					jpCell.setBackground(new Color(255, 153, 102));
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
+							// TODO - Set image width and height to ?50?
 							scaledImg = imgWeapon.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(),
 									Image.SCALE_DEFAULT);
 							if (scaledImg != null) {
@@ -396,7 +351,7 @@ public class Window extends JFrame {
 					});
 					break;
 				default:
-					jpCell.setBackground(new Color(255, 222, 173));
+					jpCell.setBackground(new Color(255, 218, 185));
 					break;
 				}
 				jpGrid.add(jpCell);
@@ -412,12 +367,11 @@ public class Window extends JFrame {
 							GameManager.move(4);
 						}
 						if (encounterPhase) {
-							jpEncounter.setVisible(true);
+							encounterFoe();
 							encounterPhase = false;
 						} else {
 							GameManager.winCondition();
 						}
-						jpLoot.setVisible(false);
 						jpGrid.removeAll();
 						gridLayout.setRows(map.getMapSize());
 						gridLayout.setColumns(map.getMapSize());
@@ -465,7 +419,7 @@ public class Window extends JFrame {
 
 	private class ButtonSelectListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			DatabaseHandler.getInstance().printDB();
+			DatabaseHandler.getInstance().printHeroesFromDB();
 			if (!isHero) {
 				jtaLog.setText(">> No such hero!\n");
 			} else {
@@ -517,54 +471,72 @@ public class Window extends JFrame {
 		}
 	}
 
-	private class ButtonHeroEncounterListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			jbtnCancelMain.setVisible(false);
-			if (jrbFight.isSelected()) {
-				GameManager.fight(false);
-			} else if (jrbRun.isSelected()) {
-				GameManager.run();
-			}
-			GameManager.winCondition();
-			jpGrid.removeAll();
-			gridLayout.setRows(map.getMapSize());
-			gridLayout.setColumns(map.getMapSize());
-			gridLayout.setHgap(-1);
-			gridLayout.setVgap(-1);
-			jpGrid.setLayout(gridLayout);
-			mapHandler();
-			jpGrid.revalidate();
-			jpGrid.repaint();
-			if (lootOption) {
-				jpLoot.setVisible(true);
-				lootOption = false;
-			} else {
-				jbtnCancelMain.setVisible(true);
-				jlblStats.setText("<html>Name: " + hero.getName() + "<br>" + "Type: " + hero.getType() + "<br>"
-						+ "Level: " + hero.getLevel() + "<br>" + "Experience: " + hero.getXP() + "<br>" + "Attack: "
-						+ hero.getAttack() + "<br>" + "Defense: " + hero.getDefense() + "<br>" + "Health: "
-						+ hero.getHP() + "<br>" + "Weapon: " + hero.getWeapon().getName() + "<br>" + "Armor: "
-						+ hero.getArmor().getName() + "<br>" + "Helm: " + hero.getHelm().getName() + "</html>");
-			}
-			jpEncounter.setVisible(false);
+	public void encounterFoe() {
+		String encounterOptions[] = { "Run", "Fight" };
+		ImageIcon foeImage = new ImageIcon(imgFoe);
+		// TODO - Add proper message
+		int encounterResponse = JOptionPane.showOptionDialog(Window.this, "What do you do?", "Encounter",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, foeImage, encounterOptions, encounterOptions[1]);
+		jbtnCancelMain.setVisible(false);
+		if (encounterResponse == 1) {
+			GameManager.fight(false);
+		} else if (encounterResponse == 0) {
+			GameManager.run();
 		}
-	}
-
-	private class ButtonHeroLootListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (jrbYes.isSelected()) {
-				hero.suitUp(artifact, artifact.getType());
-				LoggerHelper.print(artifact.getName() + " taken");
-			}
+		GameManager.winCondition();
+		jpGrid.removeAll();
+		gridLayout.setRows(map.getMapSize());
+		gridLayout.setColumns(map.getMapSize());
+		gridLayout.setHgap(-1);
+		gridLayout.setVgap(-1);
+		jpGrid.setLayout(gridLayout);
+		mapHandler();
+		jpGrid.revalidate();
+		jpGrid.repaint();
+		if (lootOption) {
+			pickupLoot();
+			lootOption = false;
+		} else {
+			jbtnCancelMain.setVisible(true);
 			jlblStats.setText("<html>Name: " + hero.getName() + "<br>" + "Type: " + hero.getType() + "<br>" + "Level: "
 					+ hero.getLevel() + "<br>" + "Experience: " + hero.getXP() + "<br>" + "Attack: " + hero.getAttack()
 					+ "<br>" + "Defense: " + hero.getDefense() + "<br>" + "Health: " + hero.getHP() + "<br>"
 					+ "Weapon: " + hero.getWeapon().getName() + "<br>" + "Armor: " + hero.getArmor().getName() + "<br>"
 					+ "Helm: " + hero.getHelm().getName() + "</html>");
-			jpLoot.setVisible(false);
-			jbtnCancelMain.setVisible(true);
-			fightPhase = false;
 		}
+	}
+
+	public void pickupLoot() {
+		String lootOptions[] = {"No", "Yes"};
+		ArtifactsHelper artifactType = artifact.getType();
+		ImageIcon artifactImg = null;
+		switch (artifactType) {
+			case WEAPON:
+				artifactImg = new ImageIcon(imgFight);
+				break;
+			case HELM:
+				artifactImg = new ImageIcon(imgHealth);
+				break;
+			case ARMOR:
+				artifactImg = new ImageIcon(imgArmour);
+				break;
+			default:
+				artifactImg = new ImageIcon(imgArmour);
+				break;
+		}
+		int takeLoot = JOptionPane.showOptionDialog(Window.this, "Take Artifact?", "Artifact",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, artifactImg, lootOptions, lootOptions[1]);
+		if (takeLoot == 1) {
+			hero.suitUp(artifact, artifact.getType());
+			LoggerHelper.print(artifact.getName() + " taken");
+		}
+		jlblStats.setText("<html>Name: " + hero.getName() + "<br>" + "Type: " + hero.getType() + "<br>" + "Level: "
+				+ hero.getLevel() + "<br>" + "Experience: " + hero.getXP() + "<br>" + "Attack: " + hero.getAttack()
+				+ "<br>" + "Defense: " + hero.getDefense() + "<br>" + "Health: " + hero.getHP() + "<br>" + "Weapon: "
+				+ hero.getWeapon().getName() + "<br>" + "Armor: " + hero.getArmor().getName() + "<br>" + "Helm: "
+				+ hero.getHelm().getName() + "</html>");
+		jbtnCancelMain.setVisible(true);
+		fightPhase = false;
 	}
 
 	private class ButtonRunListener implements ActionListener {
@@ -599,7 +571,7 @@ public class Window extends JFrame {
 			int dialogAnswer = JOptionPane.showConfirmDialog(Window.this, "Confirm deletion?", "Delete", dialogYesNo);
 			if (dialogAnswer == JOptionPane.YES_OPTION) {
 				DatabaseHandler.getInstance().deleteHero(jcbSelect.getSelectedItem().toString());
-				DatabaseHandler.getInstance().printDB();
+				DatabaseHandler.getInstance().printHeroesFromDB();
 				if (heroNumber == 0) {
 					jpSelectHero.setVisible(false);
 					jbtnCreate.setVisible(true);
@@ -620,7 +592,6 @@ public class Window extends JFrame {
 	private class ButtonCancelMainListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			jpStats.setVisible(false);
-			jpEncounter.setVisible(false);
 			jpGrid.removeAll();
 			jpGrid.setVisible(false);
 			jlblPic.setVisible(true);
@@ -633,7 +604,6 @@ public class Window extends JFrame {
 
 	private class ButtonCancelListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			jpEncounter.setVisible(false);
 			jpCreateHero.setVisible(false);
 			jpSelectHero.setVisible(false);
 			jbtnCreate.setVisible(true);

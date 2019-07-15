@@ -18,15 +18,12 @@ public abstract class Foe extends Character {
 		LoggerHelper.print(this.getName() + " attacks...");
 		character.defend(this, this.attack);
 		if (character.getHP() <= 0) {
-			switch (character.getType()) {
-			case "Villain":
-				LoggerHelper.print(this.name + " says: \"I can do this all day!\"");
+			switch (this.getType()) {
+			case "Wolf":
+				LoggerHelper.print(this.name + " says: \"AWWWOOOOOOO!\"");
 				break;
-			case "Farmer":
-				LoggerHelper.print(this.name + " says: \"Oh crop!\"");
-				break;
-			case "Nerd":
-				LoggerHelper.print(this.name + " says: \"I reject your reality and substitute my own!\"");
+			case "Zombie":
+				LoggerHelper.print(this.name + " says: \"Yum! BRAAAAAINNN!\"");
 				break;
 			default:
 				LoggerHelper.print(this.name + " says: \"OOOOOHHH NOOOOO!! The PAAAAAAAIIIINNNNN!!\"");
@@ -41,7 +38,8 @@ public abstract class Foe extends Character {
 			realDamage = 1;
 		}
 		this.HP -= realDamage;
-		LoggerHelper.print(character.getName() + " dealt " + realDamage + " points worth of damage to " + this.name + "!!");
+		LoggerHelper
+				.print(character.getName() + " dealt " + realDamage + " points worth of damage to " + this.name + "!!");
 		if (HP <= 0) {
 			LoggerHelper.print(this.name + " died!");
 		}

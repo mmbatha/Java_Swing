@@ -38,23 +38,23 @@ public class DatabaseHandler {
 	private static final String TBL_KEY_WEAPON = "weapon";
 	private static final String TBL_KEY_ARMOR = "armor";
 	private static final String TBL_KEY_HELM = "helm";
-	private static final String STATEMENT_CREATE_HEROES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_HEROES + " ("
+	private static final String STMT_CREATE_HEROES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_HEROES + " ("
 			+ TBL_KEY_ID + " INTEGER PRIMARY KEY, " + TBL_KEY_NAME + " TEXT, " + TBL_KEY_TYPE + " TEXT, "
 			+ TBL_KEY_LEVEL + " INTEGER, " + TBL_KEY_XP + " INTEGER, " + TBL_KEY_ATTACK + " INTEGER, " + TBL_KEY_DEFENSE
 			+ " INTEGER, " + TBL_KEY_HP + " INTEGER, " + TBL_KEY_WEAPON + " BLOB, " + TBL_KEY_ARMOR + " BLOB, "
 			+ TBL_KEY_HELM + " BLOB)";
-	private static final String STATEMENT_INSERT_HERO = "INSERT INTO " + TABLE_HEROES + " (" + TBL_KEY_NAME + ","
+	private static final String STMT_INSERT_HERO = "INSERT INTO " + TABLE_HEROES + " (" + TBL_KEY_NAME + ","
 			+ TBL_KEY_TYPE + "," + TBL_KEY_LEVEL + "," + TBL_KEY_XP + "," + TBL_KEY_ATTACK + "," + TBL_KEY_DEFENSE + ","
 			+ TBL_KEY_HP + "," + TBL_KEY_WEAPON + "," + TBL_KEY_ARMOR + "," + TBL_KEY_HELM
 			+ ") VALUES(?,?,?,?,?,?,?,?,?,?)";
-	private static final String STATEMENT_GET_HEROES_TABLE = "SELECT * FROM " + TABLE_HEROES;
-	private static final String STATEMENT_GET_HERO_DATA_BY_NAME = "SELECT * FROM " + TABLE_HEROES + " WHERE "
+	private static final String STMT_GET_HEROES_TABLE = "SELECT * FROM " + TABLE_HEROES;
+	private static final String STMT_GET_HERO_DATA_BY_NAME = "SELECT * FROM " + TABLE_HEROES + " WHERE "
 			+ TBL_KEY_NAME + " = ?";
-	private static final String STATEMENT_UPDATE_HERO_DATA = "UPDATE " + TABLE_HEROES + " SET " + TBL_KEY_LEVEL
+	private static final String STMT_UPDATE_HERO_DATA = "UPDATE " + TABLE_HEROES + " SET " + TBL_KEY_LEVEL
 			+ " = ?, " + TBL_KEY_XP + " = ?, " + TBL_KEY_ATTACK + " = ?," + TBL_KEY_DEFENSE + " = ?," + TBL_KEY_HP
 			+ " = ?, " + TBL_KEY_WEAPON + " = ?," + TBL_KEY_ARMOR + " = ?," + TBL_KEY_HELM + " = ? WHERE "
 			+ TBL_KEY_NAME + " = ?";
-	private static final String STATEMENT_DELETE_HERO_DATA_BY_NAME = "DELETE from " + TABLE_HEROES + " WHERE "
+	private static final String STMT_DELETE_HERO_DATA_BY_NAME = "DELETE from " + TABLE_HEROES + " WHERE "
 			+ TBL_KEY_NAME + " = ?";
 
 	private static final String SQLITE_DRIVER = "org.sqlite.JDBC";
@@ -81,7 +81,7 @@ public class DatabaseHandler {
 			Class.forName(SQLITE_DRIVER);
 			dbConnection = DriverManager.getConnection(SQLITE_URL);
 			statement = dbConnection.createStatement();
-			statement.executeUpdate(STATEMENT_CREATE_HEROES_TABLE);
+			statement.executeUpdate(STMT_CREATE_HEROES_TABLE);
 		} catch (SQLException | ClassNotFoundException ex) {
 			LoggerHelper.print("SQLException - connectToDB(): " + ex.getMessage());
 			System.exit(0);
@@ -128,7 +128,7 @@ public class DatabaseHandler {
 
 	private boolean isDuplicateHero(Connection dbConnection, Hero hero) throws SQLException {
 		statement = dbConnection.createStatement();
-		resultSet = statement.executeQuery(STATEMENT_GET_HEROES_TABLE);
+		resultSet = statement.executeQuery(STMT_GET_HEROES_TABLE);
 		while (resultSet.next()) {
 			if (hero.getName().equals(resultSet.getString(TBL_KEY_NAME))) {
 				return (true);
@@ -143,7 +143,7 @@ public class DatabaseHandler {
 			if (isDuplicateHero(dbConnection, hero)) {
 				LoggerHelper.print("Database Error: This hero already exists!");
 			} else {
-				preparedStatement = dbConnection.prepareStatement(STATEMENT_INSERT_HERO);
+				preparedStatement = dbConnection.prepareStatement(STMT_INSERT_HERO);
 				preparedStatement.setString(1, hero.getName());
 				preparedStatement.setString(2, hero.getType());
 				preparedStatement.setInt(3, hero.getLevel());
@@ -171,7 +171,7 @@ public class DatabaseHandler {
 
 			dbConnection = this.connectToDB();
 			statement = dbConnection.createStatement();
-			resultSet = statement.executeQuery(STATEMENT_GET_HEROES_TABLE);
+			resultSet = statement.executeQuery(STMT_GET_HEROES_TABLE);
 			while (resultSet.next()) {
 				isHero = true;
 				Hero hero = null;
@@ -208,60 +208,55 @@ public class DatabaseHandler {
 		return (null);
 	}
 
-	public void printDB() {
+	public void printHeroesFromDB() {
 		try {
 			StringBuilder sb = new StringBuilder();
 			dbConnection = this.connectToDB();
 			statement = dbConnection.createStatement();
-			resultSet = statement.executeQuery(STATEMENT_GET_HEROES_TABLE);
+			resultSet = statement.executeQuery(STMT_GET_HEROES_TABLE);
 			if (isGUI) {
 				jtaLog.setText("");
 			}
 			heroNumber = 0;
+			if (!isGUI) {
+				sb.append("\nName\tType\tLevel\tExperience\tAttack\tDefense\tHealth\n")
+				.append("\n----\t----\t-----\t----------\t------\t-------\t------\n");
+			}
 			while (resultSet.next()) {
 				isHero = true;
-				sb.append("\nName: ").append(resultSet.getString(TBL_KEY_NAME)).append("\n").append("Type: ")
-						.append(resultSet.getString(TBL_KEY_TYPE)).append("\n").append("Level: ")
-						.append(resultSet.getInt(TBL_KEY_LEVEL)).append("\n").append("Experience: ")
-						.append(resultSet.getInt(TBL_KEY_XP)).append("\n").append("Attack: ")
-						.append(resultSet.getInt(TBL_KEY_ATTACK)).append("\n").append("Defense: ")
-						.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n").append("Health: ")
-						.append(resultSet.getInt(TBL_KEY_HP)).append("\n");
+				if (isGUI) {
+					sb.append("\nName: ")
+							.append(resultSet.getString(TBL_KEY_NAME)).append("\n").append("Type: ")
+							.append(resultSet.getString(TBL_KEY_TYPE)).append("\n").append("Level: ")
+							.append(resultSet.getInt(TBL_KEY_LEVEL)).append("\n").append("Experience: ")
+							.append(resultSet.getInt(TBL_KEY_XP)).append("\n").append("Attack: ")
+							.append(resultSet.getInt(TBL_KEY_ATTACK)).append("\n").append("Defense: ")
+							.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n").append("Health: ")
+							.append(resultSet.getInt(TBL_KEY_HP)).append("\n");
+				} else {
+					sb.append(resultSet.getString(TBL_KEY_NAME)).append("\t")
+							.append(resultSet.getString(TBL_KEY_TYPE)).append("\t")
+							.append(resultSet.getInt(TBL_KEY_LEVEL)).append("\t")
+							.append(resultSet.getInt(TBL_KEY_XP)).append("\t\t")
+							.append(resultSet.getInt(TBL_KEY_ATTACK)).append("\t")
+							.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\t")
+							.append(resultSet.getInt(TBL_KEY_HP)).append("\n");
+				}
 				heroNumber += 1;
 			}
 			LoggerHelper.print(sb.toString());
 		} catch (SQLException ex) {
-			LoggerHelper.print("SQLException - printDB(): " + ex.getMessage());
+			LoggerHelper.print("SQLException - printHeroesFromDB(): " + ex.getMessage());
 			System.exit(0);
 		} finally {
 			closeAll();
 		}
-	}
-
-	public boolean isValidID(int id) {
-		try {
-			dbConnection = this.connectToDB();
-			statement = dbConnection.createStatement();
-			resultSet = statement.executeQuery(STATEMENT_GET_HEROES_TABLE);
-
-			while (resultSet.next()) {
-				if (resultSet.getInt(TBL_KEY_ID) == id) {
-					return (true);
-				}
-			}
-		} catch (SQLException ex) {
-			LoggerHelper.print("SQLException - isValidID(): " + ex.getMessage());
-			System.exit(0);
-		} finally {
-			closeAll();
-		}
-		return (false);
 	}
 
 	public void updateHero(Character hero) {
 		try {
 			dbConnection = this.connectToDB();
-			preparedStatement = dbConnection.prepareStatement(STATEMENT_UPDATE_HERO_DATA);
+			preparedStatement = dbConnection.prepareStatement(STMT_UPDATE_HERO_DATA);
 			preparedStatement.setInt(1, hero.getLevel());
 			preparedStatement.setInt(2, ((Hero) hero).getXP());
 			preparedStatement.setInt(3, hero.getAttack());
@@ -286,7 +281,7 @@ public class DatabaseHandler {
 	public void deleteHero(String name) {
 		try {
 			dbConnection = this.connectToDB();
-			preparedStatement = dbConnection.prepareStatement(STATEMENT_DELETE_HERO_DATA_BY_NAME);
+			preparedStatement = dbConnection.prepareStatement(STMT_DELETE_HERO_DATA_BY_NAME);
 			preparedStatement.setString(1, name);
 			preparedStatement.executeUpdate();
 		} catch (SQLException ex) {
@@ -302,7 +297,7 @@ public class DatabaseHandler {
 
 		try {
 			dbConnection = this.connectToDB();
-			preparedStatement = dbConnection.prepareStatement(STATEMENT_GET_HERO_DATA_BY_NAME);
+			preparedStatement = dbConnection.prepareStatement(STMT_GET_HERO_DATA_BY_NAME);
 			preparedStatement.setString(1, name);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

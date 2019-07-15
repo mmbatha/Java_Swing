@@ -18,6 +18,9 @@ import za.co.technoris.swingy.Views.CommandLine.CLI;
 
 import java.util.Random;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import static za.co.technoris.swingy.Helpers.GlobalHelper.hero;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.artifact;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.map;
@@ -61,19 +64,19 @@ public class GameManager {
 			int stats = hero.getLevel() + 1;
 			switch (randomNum1) {
 			case 0:
-				artifact = new Weapon("Weapon", stats);
+				artifact = new Weapon(foe.getWeapon().getName(), stats);
 				LoggerHelper.print(artifact.getName() + " - Attack: " + stats);
 				LoggerHelper.print(GAIN_MESSAGE + (((Weapon) artifact).getAttack() - hero.getWeapon().getAttack())
 						+ " attack point(s)");
 				break;
 			case 1:
-				artifact = new Armor("Armor", stats);
+				artifact = new Armor(foe.getArmor().getName(), stats);
 				LoggerHelper.print(artifact.getName() + " - Defense: " + stats);
 				LoggerHelper.print(GAIN_MESSAGE + (((Armor) artifact).getDefense() - hero.getArmor().getDefense())
 						+ " defense point(s)");
 				break;
 			case 2:
-				artifact = new Helm("Helm", stats);
+				artifact = new Helm(foe.getHelm().getName(), stats);
 				LoggerHelper.print(artifact.getName() + " - Health: " + stats);
 				LoggerHelper.print(
 						GAIN_MESSAGE + (((Helm) artifact).getHP() - hero.getHelm().getHP()) + " health point(s)");
@@ -132,10 +135,11 @@ public class GameManager {
 			}
 		}
 		if (hero.getHP() <= 0) {
-			// TODO: Show a message before quitting
 			LoggerHelper.print("Game Over!");
 			if (!isGUI) {
 				CLI.run();
+			} else {
+				JOptionPane.showMessageDialog(null, "You lost!", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 			System.exit(0);
 		} else if (foe.getHP() <= 0) {

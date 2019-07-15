@@ -22,6 +22,6 @@ public class Wolf extends Foe {
 		this.HP = 10 + this.level;
 		suitUp(new Weapon("Wolf bite", 2), ArtifactsHelper.WEAPON);
 		suitUp(new Armor("Fur coat", 1), ArtifactsHelper.ARMOR);
-		suitUp(new Helm("Doggy clothes", -1), ArtifactsHelper.HELM);
+		suitUp(new Helm("Doggy helmet", -1), ArtifactsHelper.HELM);
 	}
 }

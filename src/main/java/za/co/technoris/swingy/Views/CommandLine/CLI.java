@@ -36,10 +36,10 @@ public class CLI {
 		LoggerHelper.print("------- MODE: Console -------");
 		PrintHelper.printMenu();
 
-		extracted();
+		presentOptions();
 	}
 
-	private static void extracted() {
+	private static void presentOptions() {
 		Scanner scanner = new Scanner(System.in);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
@@ -53,7 +53,6 @@ public class CLI {
 					createHero();
 					break;
 				case 2:
-				// TODO: Allow case-insensitive searching of hero or search by index
 					selectHero();
 					break;
 				case 3:
@@ -90,6 +89,7 @@ public class CLI {
 					LoggerHelper.print("- Armor: " + hero.getArmor().getName());
 					LoggerHelper.print("- Helm: " + hero.getHelm().getName() + "\n");
 				} else if (line.matches("0\\s*")) {
+					DatabaseHandler.getInstance().updateHero(hero);
 					System.exit(0);
 				} else {
 					LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + INVALID_OPTION);
@@ -101,7 +101,7 @@ public class CLI {
 
 	private static void selectHero() {
 		LoggerHelper.print(ANSI_GREEN + "You can pick:" + ANSI_RESET);
-		DatabaseHandler.getInstance().printDB();
+		DatabaseHandler.getInstance().printHeroesFromDB();
 		if (!isHero) {
 			LoggerHelper.print(ANSI_RED + ">> " + ANSI_RESET + " No such hero!\n");
 			PrintHelper.printMenu();
@@ -111,10 +111,10 @@ public class CLI {
 		}
 		isHero = false;
 
-		extracted2();
+		getSelectedHero();
 	}
 
-	private static void extracted2() {
+	private static void getSelectedHero() {
 		Scanner scanner = new Scanner(System.in);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
@@ -136,10 +136,10 @@ public class CLI {
 
 	private static void nameHero(HeroTypes heroType) {
 		LoggerHelper.print("Enter a name:");
-		extracted3(heroType);
+		addNewHero(heroType);
 	}
 
-	private static void extracted3(HeroTypes type) {
+	private static void addNewHero(HeroTypes type) {
 		Scanner scanner = new Scanner(System.in);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
@@ -155,11 +155,11 @@ public class CLI {
 	private static void createHero() {
 		PrintHelper.printHeroList();
 
-		extracted4();
+		selectHeroType();
 		PrintHelper.printMenu();
 	}
 
-	private static void extracted4() {
+	private static void selectHeroType() {
 		Scanner scanner = new Scanner(System.in);
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();

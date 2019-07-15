@@ -56,16 +56,18 @@ public abstract class Hero extends Character {
 		character.defend(this, this.attack + critical);
 		if (character.getHP() <= 0) {
 			int xpEarned = 0;
-			String type = this.getType();
-			switch (type) {
-			case "Zombie":
-				LoggerHelper.print(this.name + " says: \"Death has claimed another!\"");
+			switch (this.getType()) {
+			case "Villain":
+				LoggerHelper.print(this.name + " says: \"I can do this all day!\"");
 				break;
-			case "Wolf":
-				LoggerHelper.print(this.name + " says: \"Too easy!\"");
+			case "Farmer":
+				LoggerHelper.print(this.name + " says: \"Oh crop!\"");
+				break;
+			case "Nerd":
+				LoggerHelper.print(this.name + " says: \"I reject your reality and substitute my own!\"");
 				break;
 			default:
-				LoggerHelper.print(this.name + " says: \"Get shwifty!\"");
+				LoggerHelper.print(this.name + " says: \"OOOOOHHH NOOOOO!! The PAAAAAAAIIIINNNNN!!\"");
 			}
 			if (character.getType().equals("Zombie")) {
 				xpEarned = (int) (Math.ceil((float) this.level / 2) * 750);
@@ -88,7 +90,8 @@ public abstract class Hero extends Character {
 			realDamage = 1;
 		}
 		this.HP -= realDamage;
-		LoggerHelper.print(character.getName() + " dealt " + realDamage + " points worth of damage to " + this.name + "!!");
+		LoggerHelper
+				.print(character.getName() + " dealt " + realDamage + " points worth of damage to " + this.name + "!!");
 		if (this.HP <= 0) {
 			LoggerHelper.print(this.name + " died!");
 		}
