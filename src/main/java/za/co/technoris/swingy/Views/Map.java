@@ -72,9 +72,11 @@ public class Map {
 	}
 
 	private void printMap() {
+		// TODO: Add row separators
 		for (int[] row : map) {
+			System.out.print("|");
 			for (int column : row) {
-				String box = column + " ";
+				String box = column + ANSI_RESET + "|";
 				switch (column) {
 				case 1:
 					System.out.print(ANSI_GREEN + box + ANSI_RESET);

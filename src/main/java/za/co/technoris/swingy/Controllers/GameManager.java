@@ -7,6 +7,7 @@
 package za.co.technoris.swingy.Controllers;
 
 import za.co.technoris.swingy.Helpers.FoeTypes;
+import za.co.technoris.swingy.Helpers.ImageHelper;
 import za.co.technoris.swingy.Helpers.LoggerHelper;
 import za.co.technoris.swingy.Helpers.PrintHelper;
 import za.co.technoris.swingy.Database.DatabaseHandler;
@@ -16,9 +17,11 @@ import za.co.technoris.swingy.Models.Artifacts.Weapon;
 import za.co.technoris.swingy.Models.Characters.Foe;
 import za.co.technoris.swingy.Views.CommandLine.CLI;
 
+import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import static za.co.technoris.swingy.Helpers.GlobalHelper.hero;
@@ -32,6 +35,8 @@ import static za.co.technoris.swingy.Helpers.GlobalHelper.lootOption;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.foe;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.encounterPhase;
 import static za.co.technoris.swingy.Helpers.GlobalHelper.foeType;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.foeMessage;
+import static za.co.technoris.swingy.Helpers.GlobalHelper.ASSETS_DIR;
 import static za.co.technoris.swingy.Controllers.CharacterFactory.newFoe;
 
 public class GameManager {
@@ -44,10 +49,12 @@ public class GameManager {
 
 	private static int[] prevMove = new int[2];
 
+	private static BufferedImage imgLost = ImageHelper.loadImage(ASSETS_DIR + "pepe.png");
+
 	public static void winCondition() {
 		if (hero.getX() == map.getMapSize() - 1 || hero.getY() == map.getMapSize() - 1 || hero.getX() == 0
 				|| hero.getY() == 0) {
-			LoggerHelper.print("You've reached a wall! You live to die another day.\n\n----- NEW LEVEL -----\n");
+			LoggerHelper.print("You've reached a wall! You live to die another day.\n\n----- NEW MAP -----\n");
 			map = MapFactory.generateMap(hero);
 			if (!isGUI) {
 				CLI.moveHero();
@@ -96,8 +103,8 @@ public class GameManager {
 					if (line.matches("\\s*[1-2]\\s*")) {
 						int num = Integer.parseInt(line.trim());
 						if (num == 1) {
-							hero.suitUp(artifact, artifact.getType());
 							LoggerHelper.print(artifact.getName() + " taken");
+							hero.suitUp(artifact, artifact.getType());
 							break;
 						} else if (num == 2) {
 							break;
@@ -139,7 +146,8 @@ public class GameManager {
 			if (!isGUI) {
 				CLI.run();
 			} else {
-				JOptionPane.showMessageDialog(null, "You lost!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				ImageIcon lostIcon = new ImageIcon(imgLost);
+				JOptionPane.showMessageDialog(null, "You lost!", "Game Over", JOptionPane.INFORMATION_MESSAGE, lostIcon);
 			}
 			System.exit(0);
 		} else if (foe.getHP() <= 0) {
@@ -223,8 +231,8 @@ public class GameManager {
 				foe = (Foe) newFoe(FoeTypes.WOLF, hero);
 			else if ("Zombie".equals(foeType))
 				foe = (Foe) newFoe(FoeTypes.ZOMBIE, hero);
-			LoggerHelper
-					.print("You're facing a level " + foe.getLevel() + " " + foe.getName() + "! Choose your action...");
+			foeMessage = "You're facing a level " + foe.getLevel() + " " + foe.getName() + "! Choose your action...";
+			LoggerHelper.print(foeMessage);
 			fightOrRun();
 		}
 	}

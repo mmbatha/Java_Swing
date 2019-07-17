@@ -13,6 +13,7 @@ import za.co.technoris.swingy.Controllers.CharacterFactory;
 import za.co.technoris.swingy.Models.Artifacts.Armor;
 import za.co.technoris.swingy.Models.Artifacts.Helm;
 import za.co.technoris.swingy.Models.Artifacts.Weapon;
+import za.co.technoris.swingy.Models.Artifacts.Artifact;
 import za.co.technoris.swingy.Models.Characters.*;
 import za.co.technoris.swingy.Models.Characters.Character;
 
@@ -48,14 +49,13 @@ public class DatabaseHandler {
 			+ TBL_KEY_HP + "," + TBL_KEY_WEAPON + "," + TBL_KEY_ARMOR + "," + TBL_KEY_HELM
 			+ ") VALUES(?,?,?,?,?,?,?,?,?,?)";
 	private static final String STMT_GET_HEROES_TABLE = "SELECT * FROM " + TABLE_HEROES;
-	private static final String STMT_GET_HERO_DATA_BY_NAME = "SELECT * FROM " + TABLE_HEROES + " WHERE "
-			+ TBL_KEY_NAME + " = ?";
-	private static final String STMT_UPDATE_HERO_DATA = "UPDATE " + TABLE_HEROES + " SET " + TBL_KEY_LEVEL
-			+ " = ?, " + TBL_KEY_XP + " = ?, " + TBL_KEY_ATTACK + " = ?," + TBL_KEY_DEFENSE + " = ?," + TBL_KEY_HP
-			+ " = ?, " + TBL_KEY_WEAPON + " = ?," + TBL_KEY_ARMOR + " = ?," + TBL_KEY_HELM + " = ? WHERE "
-			+ TBL_KEY_NAME + " = ?";
-	private static final String STMT_DELETE_HERO_DATA_BY_NAME = "DELETE from " + TABLE_HEROES + " WHERE "
-			+ TBL_KEY_NAME + " = ?";
+	private static final String STMT_GET_HERO_DATA_BY_NAME = "SELECT * FROM " + TABLE_HEROES + " WHERE " + TBL_KEY_NAME
+			+ " = ?";
+	private static final String STMT_UPDATE_HERO_DATA = "UPDATE " + TABLE_HEROES + " SET " + TBL_KEY_LEVEL + " = ?, "
+			+ TBL_KEY_XP + " = ?, " + TBL_KEY_ATTACK + " = ?," + TBL_KEY_DEFENSE + " = ?," + TBL_KEY_HP + " = ?, "
+			+ TBL_KEY_WEAPON + " = ?," + TBL_KEY_ARMOR + " = ?," + TBL_KEY_HELM + " = ? WHERE " + TBL_KEY_NAME + " = ?";
+	private static final String STMT_DELETE_HERO_DATA_BY_NAME = "DELETE from " + TABLE_HEROES + " WHERE " + TBL_KEY_NAME
+			+ " = ?";
 
 	private static final String SQLITE_DRIVER = "org.sqlite.JDBC";
 	private static final String SQLITE_URL = "jdbc:sqlite:" + DATABASE_NAME;
@@ -219,33 +219,38 @@ public class DatabaseHandler {
 			}
 			heroNumber = 0;
 			if (!isGUI) {
-				sb.append("\nName\tType\tLevel\tExperience\tAttack\tDefense\tHealth\n")
-				.append("\n----\t----\t-----\t----------\t------\t-------\t------\n");
+				sb.append(String.format("|%10s|%8s|%6s|%8s|%8s|%8s|%8s|%20s|%20s|%20s|\n","Name","Type","Level","XP","Attack","Defense","HP","Armor","Helm","Weapon"))
+						.append(String.format("-------------------------------------------------------------------------------------------------------------------------------\n"));
 			}
 			while (resultSet.next()) {
 				isHero = true;
 				if (isGUI) {
-					sb.append("\nName: ")
-							.append(resultSet.getString(TBL_KEY_NAME)).append("\n").append("Type: ")
+					sb.append("\nName: ").append(resultSet.getString(TBL_KEY_NAME)).append("\n").append("Type: ")
 							.append(resultSet.getString(TBL_KEY_TYPE)).append("\n").append("Level: ")
 							.append(resultSet.getInt(TBL_KEY_LEVEL)).append("\n").append("Experience: ")
 							.append(resultSet.getInt(TBL_KEY_XP)).append("\n").append("Attack: ")
 							.append(resultSet.getInt(TBL_KEY_ATTACK)).append("\n").append("Defense: ")
 							.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\n").append("Health: ")
-							.append(resultSet.getInt(TBL_KEY_HP)).append("\n");
+							.append(resultSet.getInt(TBL_KEY_HP)).append("\n").append("Armor: ")
+							.append(((Artifact) deserializeObject(resultSet, TBL_KEY_ARMOR)).getName()).append("\n").append("Helm: ")
+							.append(((Artifact) deserializeObject(resultSet, TBL_KEY_HELM)).getName()).append("\n").append("Weapon: ")
+							.append(((Artifact) deserializeObject(resultSet, TBL_KEY_WEAPON)).getName()).append("\n");
 				} else {
-					sb.append(resultSet.getString(TBL_KEY_NAME)).append("\t")
-							.append(resultSet.getString(TBL_KEY_TYPE)).append("\t")
-							.append(resultSet.getInt(TBL_KEY_LEVEL)).append("\t")
-							.append(resultSet.getInt(TBL_KEY_XP)).append("\t\t")
-							.append(resultSet.getInt(TBL_KEY_ATTACK)).append("\t")
-							.append(resultSet.getInt(TBL_KEY_DEFENSE)).append("\t")
-							.append(resultSet.getInt(TBL_KEY_HP)).append("\n");
+					sb.append(String.format("|%10s", resultSet.getString(TBL_KEY_NAME)))
+							.append(String.format("|%8s", resultSet.getString(TBL_KEY_TYPE)))
+							.append(String.format("|%6s", resultSet.getInt(TBL_KEY_LEVEL)))
+							.append(String.format("|%8s", resultSet.getInt(TBL_KEY_XP)))
+							.append(String.format("|%8s", resultSet.getInt(TBL_KEY_ATTACK)))
+							.append(String.format("|%8s", resultSet.getInt(TBL_KEY_DEFENSE)))
+							.append(String.format("|%8s", resultSet.getInt(TBL_KEY_HP)))
+							.append(String.format("|%20s", ((Artifact) deserializeObject(resultSet, TBL_KEY_ARMOR)).getName()))
+							.append(String.format("|%20s", ((Artifact) deserializeObject(resultSet, TBL_KEY_HELM)).getName()))
+							.append(String.format("|%20s|", ((Artifact) deserializeObject(resultSet, TBL_KEY_WEAPON)).getName())).append("\n");
 				}
 				heroNumber += 1;
 			}
 			LoggerHelper.print(sb.toString());
-		} catch (SQLException ex) {
+		} catch (ClassNotFoundException | IOException | SQLException ex) {
 			LoggerHelper.print("SQLException - printHeroesFromDB(): " + ex.getMessage());
 			System.exit(0);
 		} finally {

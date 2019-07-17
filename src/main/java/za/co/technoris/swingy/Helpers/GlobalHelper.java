@@ -23,6 +23,7 @@ public class GlobalHelper {
 	public static final String ANSI_GREEN = "\u001B[32m";
 	public static final String ANSI_YELLOW = "\u001B[33m";
 	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ASSETS_DIR = "src/main/java/za/co/technoris/swingy/Assets/";
 
 	public static ValidatorFactory factory;
 	public static Boolean isHero = false;
@@ -37,4 +38,5 @@ public class GlobalHelper {
 	public static Artifact artifact;
 	public static Map map;
 	public static String foeType;
+	public static String foeMessage;
 }
