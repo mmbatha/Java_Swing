@@ -1,0 +1,16 @@
+credential.helper=osxkeychain
+user.name=Monde MBATHA
+user.email=mmbatha@student.wethinkcode.co.za
+alias.troubleshoot=!troubleshoot() { git add -u && git commit -m "Troubleshooting the $1 during deployment to $2."; }; troubleshoot
+alias.update=!update() { git add -u && git commit -m "Updated the $1 for $2."; }; update
+alias.gpush=!gpush() { git push origin master; }; gpush
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+core.ignorecase=true
+core.precomposeunicode=true
+remote.origin.url=https://github.com/mmbatha/42_swingy.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
