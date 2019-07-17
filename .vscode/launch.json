@@ -2,12 +2,23 @@
 	"configurations": [
 		{
 			"type": "java",
-			"name": "Debug (Launch) - Main <swingy>",
+			"name": "Debug Console - Main <swingy>",
+			"request": "launch",
+			"mainClass": "za.co.technoris.swingy.Main",
+			"projectName": "swingy",
+			"args": "console",
+			"console": "integratedTerminal",
+			"preLaunchTask": "clean"
+		},
+		{
+			"type": "java",
+			"name": "Debug GUI - Main <swingy>",
 			"request": "launch",
 			"mainClass": "za.co.technoris.swingy.Main",
 			"projectName": "swingy",
 			"args": "gui",
-			"console": "integratedTerminal"
+			"console": "integratedTerminal",
+			"preLaunchTask": "clean"
 		}
 	]
 }
