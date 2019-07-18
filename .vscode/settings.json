@@ -1,14 +1,27 @@
 {
 	"java.configuration.updateBuildConfiguration": "automatic",
-	"java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/goinfre/mmbatha/.vscode/extensions/gabrielbb.vscode-lombok-0.9.8/server/lombok.jar\"",
-    "editor.suggestSelection": "first",
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+	"editor.suggestSelection": "first",
+	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 	"files.autoSave": "onFocusChange",
 	"files.insertFinalNewline": true,
 	"files.trimTrailingWhitespace": true,
-    "editor.detectIndentation": false,
+	"editor.detectIndentation": false,
 	"editor.insertSpaces": false,
 	"git.enableSmartCommit": true,
 	"git.confirmSync": false,
-	"editor.tabSize": 4
+	"editor.tabSize": 4,
+	"editor.wordWrap": "wordWrapColumn",
+	"editor.accessibilitySupport": "off",
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true
+	},
+	"telemetry.enableTelemetry": false,
+	"merge-conflict.autoNavigateNextConflict.enabled": true,
+	"git.autoStash": true,
+	"git.countBadge": "tracked",
+	"git.defaultCloneDirectory": "",
+	"git.inputValidationLength": 100,
+	"java.configuration.checkProjectSettingsExclusions": false,
+	"java.implementationsCodeLens.enabled": true,
+	"java.debug.settings.console": "integratedTerminal"
 }
