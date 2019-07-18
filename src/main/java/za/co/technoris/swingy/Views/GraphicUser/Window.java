@@ -1,6 +1,6 @@
 /*
- * @Author: mmbatha 
- * @Date: 2019-07-04 10:42:49 
+ * @Author: mmbatha
+ * @Date: 2019-07-04 10:42:49
  * @Last Modified by: mmbatha
  * @Last Modified time: 2019-07-04 11:15:19
  */
@@ -76,7 +76,7 @@ public class Window extends JFrame {
 	private JLabel jlblSelect = new JLabel("Select your hero");
 	private JLabel jlblAction = new JLabel("Action");
 	// private JLabel jlblTake = new JLabel("Take Artifact?");
-	private JLabel jlblLog = new JLabel("Log");
+	// private JLabel jlblLog = new JLabel("Log");
 	private JLabel jlblStats = new JLabel("Stats");
 	private JLabel jlblPic;
 	private JLabel jlblName = new JLabel("Name");
@@ -111,6 +111,7 @@ public class Window extends JFrame {
 	private BufferedImage imgHealth;
 	private BufferedImage imgFight;
 	private BufferedImage imgFoe;
+	private BufferedImage imgPath;
 	private Image scaledImg;
 
 	private GridLayout gridLayout;
@@ -124,9 +125,10 @@ public class Window extends JFrame {
 	private Color skyBlueColor = new Color(0, 191, 255); // Color: #00BFFF
 	private Color greyColor = new Color(50, 49, 50); // Color: #323132
 	private Color brownColor = new Color(140, 90, 24); // Color: #8C5A18
-	private Color peachColor = new Color(255, 153, 102); // Color: #FF9966
-	private Color lightPeachColor = new Color(255, 218, 185); // Color: #FFDAB9
+	// private Color peachColor = new Color(255, 153, 102); // Color: #FF9966
+	// private Color lightPeachColor = new Color(255, 218, 185); // Color: #FFDAB9
 	private Color blackColor = new Color(38, 37, 38); // Color: #262526
+	private Color greenColor = new Color(0, 204, 102); // Color: #00CC66
 
 	Window() {
 		setTitle("Swingy RPG");
@@ -159,6 +161,7 @@ public class Window extends JFrame {
 	private void initiateUIComponents(Window window) {
 		jtaLog = new JTextArea("", 30, 25);
 		jScrollPane = new JScrollPane(jtaLog);
+		jScrollPane.setBackground(blackColor);
 		jtaLog.setEditable(false);
 		jtaLog.setLineWrap(true);
 		jtaLog.setWrapStyleWord(true);
@@ -177,6 +180,7 @@ public class Window extends JFrame {
 		imgHealth = ImageHelper.loadImage(ASSETS_DIR + "health.png");
 		imgFight = ImageHelper.loadImage(ASSETS_DIR + "weapon2.png");
 		imgFoe = ImageHelper.loadImage(ASSETS_DIR + "foe.png");
+		imgPath = ImageHelper.loadImage(ASSETS_DIR + "path.png");
 		scaledImg = bgImage;
 		jlblPic = new JLabel(new ImageIcon(scaledImg));
 
@@ -202,39 +206,57 @@ public class Window extends JFrame {
 
 		jbtnCreate.setPreferredSize(new Dimension(200, 50));
 		jbtnCreate.addActionListener(new CreateButtonClicked());
+		jbtnCreate.setForeground(greyColor);
+		jbtnCreate.setBackground(blackColor);
 		jbtnSelect.setPreferredSize(new Dimension(200, 50));
 		jbtnSelect.addActionListener(new SelectHeroButtonClicked());
+		jbtnSelect.setForeground(greyColor);
+		jbtnSelect.setBackground(blackColor);
 		switchMenuItem.addActionListener(new SwitchViewButtonClicked());
 		jbtnValidateCreation.setPreferredSize(new Dimension(200, 40));
 		jbtnValidateCreation.addActionListener(new CreateHeroButtonClicked());
 		jbtnValidateCreation.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jbtnValidateCreation.setMaximumSize(getSize());
+		jbtnValidateCreation.setForeground(greyColor);
+		jbtnValidateCreation.setBackground(blackColor);
 		jbtnRunGame.setPreferredSize(new Dimension(200, 40));
 		jbtnRunGame.addActionListener(new RunButtonClicked());
 		jbtnRunGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jbtnRunGame.setMaximumSize(getSize());
+		jbtnRunGame.setForeground(greyColor);
+		jbtnRunGame.setBackground(blackColor);
 		jbtnDeleteHero.setPreferredSize(new Dimension(200, 40));
 		jbtnDeleteHero.addActionListener(new DeleteHeroButtonClicked());
 		jbtnDeleteHero.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jbtnDeleteHero.setMaximumSize(getSize());
 		jbtnDeleteHero.setForeground(redColor);
+		jbtnDeleteHero.setBackground(blackColor);
 		jbtnCancel.setPreferredSize(new Dimension(200, 40));
 		jbtnCancel.addActionListener(new CancelButtonClicked());
 		jbtnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jbtnCancel.setMaximumSize(getSize());
+		jbtnCancel.setForeground(greyColor);
+		jbtnCancel.setBackground(blackColor);
 		jbtnMainCancel.setPreferredSize(new Dimension(200, 40));
 		jbtnMainCancel.addActionListener(new MainCancelButtonClicked());
 		jbtnMainCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jbtnMainCancel.setMaximumSize(getSize());
+		jbtnMainCancel.setForeground(greyColor);
+		jbtnMainCancel.setBackground(blackColor);
 		jlblCreate.setAlignmentX(Component.CENTER_ALIGNMENT);
+		jlblCreate.setForeground(lightGreyColor);
+		jlblCreate.setBackground(blackColor);
 		jlblSelect.setAlignmentX(Component.CENTER_ALIGNMENT);
+		jlblSelect.setForeground(lightGreyColor);
+		jlblSelect.setBackground(blackColor);
 		jlblAction.setAlignmentX(Component.CENTER_ALIGNMENT);
 		// jlblTake.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jtfHeroName.setPreferredSize(new Dimension(150, 40));
 
 		Box verticalBox = Box.createVerticalBox();
-		// TODO: Set colours to dark mode
 		jpStats.setPreferredSize(new Dimension(300, 175));
+		jlblStats.setForeground(lightGreyColor);
+		jpStats.setBackground(blackColor);
 		jlblStats.setAlignmentY(Component.CENTER_ALIGNMENT);
 		verticalBox.add(jlblStats);
 		jpStats.add(verticalBox);
@@ -249,6 +271,7 @@ public class Window extends JFrame {
 		jpCreateHero.add(jpInput);
 		jpCreateHero.add(jbtnValidateCreation);
 		jpCreateHero.setVisible(false);
+		jpCreateHero.setBackground(blackColor);
 		jcbCreate.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		jpSelectHero.setPreferredSize(new Dimension(300, 200));
@@ -258,6 +281,8 @@ public class Window extends JFrame {
 		jpSelectHero.add(jbtnRunGame);
 		jpSelectHero.add(jbtnDeleteHero);
 		jpSelectHero.setVisible(false);
+		jpSelectHero.setForeground(lightGreyColor);
+		jpSelectHero.setBackground(blackColor);
 		jcbSelect.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		jpGrid.setLayout(gridLayout);
@@ -273,7 +298,7 @@ public class Window extends JFrame {
 		jpMenu.add(jpCreateHero);
 		jpMenu.add(jpSelectHero);
 		jpMenu.add(jbtnMainCancel);
-		jpMenu.add(jlblLog);
+		// jpMenu.add(jlblLog);
 		jpMenu.add(jScrollPane);
 		jpMap.add(jlblPic);
 		jpMap.add(jpGrid);
@@ -283,6 +308,7 @@ public class Window extends JFrame {
 		jpContainer.add(menuBar, BorderLayout.PAGE_START);
 		jpContainer.add(jpMenu, BorderLayout.LINE_START);
 		jpContainer.add(jpMap, BorderLayout.CENTER);
+		jpContainer.setBackground(blackColor);
 		// jpContainer.add(jpLog, BorderLayout.LINE_END);
 
 		window.setContentPane(jpContainer);
@@ -364,7 +390,7 @@ public class Window extends JFrame {
 					});
 					break;
 				case 8:
-					jpCell.setBackground(peachColor);
+					jpCell.setBackground(redColor);
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
@@ -380,21 +406,37 @@ public class Window extends JFrame {
 						}
 					});
 					break;
+				case 0:
+					jpCell.setBackground(greenColor);
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							scaledImg = imgPath.getScaledInstance(jpCell.getWidth(), jpCell.getHeight(), Image.SCALE_DEFAULT);
+							if (scaledImg != null) {
+								JLabel jlblImage = new JLabel(new ImageIcon(scaledImg));
+								jpCell.add(jlblImage);
+								pack();
+							} else {
+								LoggerHelper.print(IMAGE_SPRITE_ERROR);
+							}
+						}
+					});
+					break;
 				default:
-					jpCell.setBackground(lightPeachColor);
+					jpCell.setBackground(greenColor);
 					break;
 				}
 				jpGrid.add(jpCell);
 				jpCell.addMouseListener(new MouseListener() {
 					public void mouseClicked(MouseEvent e) {
 						if (x + 1 < map.getMapSize() && map.getMap()[x + 1][y] == 1) {
-							GameManager.move(8);
+							GameManager.moveHero(8);
 						} else if (y - 1 >= 0 && map.getMap()[x][y - 1] == 1) {
-							GameManager.move(6);
+							GameManager.moveHero(6);
 						} else if (x - 1 >= 0 && map.getMap()[x - 1][y] == 1) {
-							GameManager.move(2);
+							GameManager.moveHero(2);
 						} else if (y + 1 < map.getMapSize() && map.getMap()[x][y + 1] == 1) {
-							GameManager.move(4);
+							GameManager.moveHero(4);
 						}
 						if (encounterPhase) {
 							encounterFoe();
@@ -508,9 +550,9 @@ public class Window extends JFrame {
 				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, foeImage, encounterOptions, encounterOptions[1]);
 		jbtnMainCancel.setVisible(false);
 		if (encounterResponse == 1) {
-			GameManager.fight(false);
+			GameManager.fightsFoe(false);
 		} else if (encounterResponse == 0) {
-			GameManager.run();
+			GameManager.runsAway();
 		}
 		GameManager.winCondition();
 		jpGrid.removeAll();
@@ -638,7 +680,7 @@ public class Window extends JFrame {
 			jbtnCreate.setVisible(true);
 			jbtnSelect.setVisible(true);
 			switchMenuItem.setVisible(true);
-			jlblLog.setVisible(false);
+			// jlblLog.setVisible(false);
 			jtaLog.setVisible(false);
 		}
 	}

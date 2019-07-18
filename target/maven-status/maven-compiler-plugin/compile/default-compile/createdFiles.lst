@@ -10,6 +10,7 @@ za/co/technoris/swingy/Views/GraphicUser/Window.class
 za/co/technoris/swingy/Models/Characters/Farmer.class
 za/co/technoris/swingy/Models/Artifacts/Artifact.class
 za/co/technoris/swingy/Controllers/GameManager.class
+za/co/technoris/swingy/Views/GraphicUser/Window$7.class
 za/co/technoris/swingy/Helpers/PrintHelper.class
 za/co/technoris/swingy/Views/GraphicUser/Window$MainCancelButtonClicked.class
 za/co/technoris/swingy/Models/Characters/Foe.class

@@ -1,15 +1,15 @@
 /*
- * @Author: mmbatha 
- * @Date: 2019-07-04 10:53:26 
- * @Last Modified by:   mmbatha 
- * @Last Modified time: 2019-07-04 10:53:26 
+ * @Author: mmbatha
+ * @Date: 2019-07-04 10:53:26
+ * @Last Modified by:   mmbatha
+ * @Last Modified time: 2019-07-04 10:53:26
  */
 package za.co.technoris.swingy.Helpers;
 
 public class PrintHelper {
 
 	public static void printMenu() {
-		LoggerHelper.print("1: Create a new hero\n" + "2: Select a hero\n" + "3: Switch to GUI view\n" + "0: Quit");
+		LoggerHelper.printForInput("1: Create a new hero\n" + "2: Select a hero\n" + "3: Switch to GUI view\n" + "0: Quit");
 	}
 
 	public static void printHeroList() {
@@ -44,6 +44,6 @@ public class PrintHelper {
 	}
 
 	public static void printFightOptions() {
-		LoggerHelper.print("1: Fight\n" + "2: Run");
+		LoggerHelper.printForInput("1: Fight\n" + "2: Run");
 	}
 }

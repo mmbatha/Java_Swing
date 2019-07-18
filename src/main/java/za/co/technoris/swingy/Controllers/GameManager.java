@@ -1,8 +1,8 @@
 /*
- * @Author: mmbatha 
- * @Date: 2019-07-04 10:45:23 
- * @Last Modified by:   mmbatha 
- * @Last Modified time: 2019-07-04 10:45:23 
+ * @Author: mmbatha
+ * @Date: 2019-07-04 10:45:23
+ * @Last Modified by:   mmbatha
+ * @Last Modified time: 2019-07-04 10:45:23
  */
 package za.co.technoris.swingy.Controllers;
 
@@ -122,7 +122,7 @@ public class GameManager {
 		}
 	}
 
-	public static void fight(boolean fled) {
+	public static void fightsFoe(boolean fled) {
 		if (fled) {
 			LoggerHelper.print(foe.getName() + " starts attacking:");
 			while (hero.getHP() > 0 && foe.getHP() > 0) {
@@ -158,12 +158,12 @@ public class GameManager {
 		}
 	}
 
-	public static void run() {
+	public static void runsAway() {
 		int random = new Random().nextInt(2);
 		switch (random) {
 		case 0:
 			LoggerHelper.print("You couldn't escape!");
-			fight(true);
+			fightsFoe(true);
 			break;
 		case 1:
 			LoggerHelper.print("You fled from the battle!");
@@ -185,10 +185,10 @@ public class GameManager {
 					int num = Integer.parseInt(line.trim());
 					switch (num) {
 					case 1:
-						fight(false);
+						fightsFoe(false);
 						return;
 					case 2:
-						run();
+						runsAway();
 						return;
 					}
 				} else {
@@ -201,7 +201,7 @@ public class GameManager {
 		}
 	}
 
-	public static void move(int direction) {
+	public static void moveHero(int direction) {
 		switch (direction) {
 		case NORTH:
 			hero.setPosition(-1, 0);

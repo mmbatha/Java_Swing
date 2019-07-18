@@ -1,8 +1,8 @@
 /*
- * @Author: mmbatha 
- * @Date: 2019-07-04 10:41:49 
- * @Last Modified by:   mmbatha 
- * @Last Modified time: 2019-07-04 10:41:49 
+ * @Author: mmbatha
+ * @Date: 2019-07-04 10:41:49
+ * @Last Modified by:   mmbatha
+ * @Last Modified time: 2019-07-04 10:41:49
  */
 package za.co.technoris.swingy.Views.CommandLine;
 
@@ -33,7 +33,7 @@ public class CLI {
 
 	public static void run() {
 		isGUI = false;
-		LoggerHelper.print("------- MODE: Console -------");
+		LoggerHelper.print("------- MODE: Console -------\n");
 		PrintHelper.printMenu();
 
 		presentOptions();
@@ -76,11 +76,11 @@ public class CLI {
 			String line = scanner.nextLine();
 			if (line.matches("[2468]\\s*")) {
 				int numMove = Integer.parseInt(line.trim());
-				GameManager.move(numMove);
+				GameManager.moveHero(numMove);
 				GameManager.winCondition();
 			} else {
 				if (line.matches("5\\s*")) {
-					LoggerHelper.print("- Level: " + hero.getLevel());
+					LoggerHelper.print("\n- Level: " + hero.getLevel());
 					LoggerHelper.print("- XP: " + hero.getXP());
 					LoggerHelper.print("- Attack: " + hero.getAttack());
 					LoggerHelper.print("- Defense: " + hero.getDefense());

@@ -1,8 +1,8 @@
 /*
- * @Author: mmbatha 
- * @Date: 2019-07-04 11:15:38 
- * @Last Modified by:   mmbatha 
- * @Last Modified time: 2019-07-04 11:15:38 
+ * @Author: mmbatha
+ * @Date: 2019-07-04 11:15:38
+ * @Last Modified by:   mmbatha
+ * @Last Modified time: 2019-07-04 11:15:38
  */
 package za.co.technoris.swingy.Views;
 
@@ -72,11 +72,9 @@ public class Map {
 	}
 
 	private void printMap() {
-		// TODO: Add row separators
 		for (int[] row : map) {
-			System.out.print("|");
 			for (int column : row) {
-				String box = column + ANSI_RESET + "|";
+				String box = column + " ";
 				switch (column) {
 				case 1:
 					System.out.print(ANSI_GREEN + box + ANSI_RESET);
