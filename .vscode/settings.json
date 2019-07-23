@@ -23,5 +23,10 @@
 	"git.inputValidationLength": 100,
 	"java.configuration.checkProjectSettingsExclusions": false,
 	"java.implementationsCodeLens.enabled": true,
-	"java.debug.settings.console": "integratedTerminal"
+	"java.debug.settings.console": "integratedTerminal",
+	"python.pythonPath": "/goinfre/mmbatha/.brew/bin/python3",
+	"docker.machineName": "Default",
+	"docker.host": "tcp://192.168.99.100:2376",
+	"docker.certPath": "/goinfre/mmbatha/.docker/machine/machines/Default",
+	"docker.tlsVerify": "true"
 }
