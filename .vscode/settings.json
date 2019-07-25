@@ -28,5 +28,6 @@
 	"docker.machineName": "Default",
 	"docker.host": "tcp://192.168.99.100:2376",
 	"docker.certPath": "/goinfre/mmbatha/.docker/machine/machines/Default",
-	"docker.tlsVerify": "true"
+	"docker.tlsVerify": "true",
+	"terminal.integrated.scrollback": 2000
 }
