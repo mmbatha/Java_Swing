@@ -1,8 +1,8 @@
 *.class
-.DS_Store
 .idea
-.settings
 .factorypath
 .project
 .classpath
 target/
+.settings
+.DS_Store
